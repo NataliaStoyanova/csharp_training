@@ -24,7 +24,7 @@ namespace WebAddressbookTests
         public void SetupTest()
         {
             driver = new FirefoxDriver();
-            baseURL = "http://localhost/addressbook";
+            baseURL = "http://localhost";
             verificationErrors = new StringBuilder();
         }
 
@@ -45,34 +45,61 @@ namespace WebAddressbookTests
         [Test]
         public void GroupCreationTest()
         {
-            //login
-            driver.Navigate().GoToUrl(baseURL);
-            driver.FindElement(By.Name("user")).Click();
-            driver.FindElement(By.Name("user")).Clear();
-            driver.FindElement(By.Name("user")).SendKeys("admin");
-            driver.FindElement(By.Name("pass")).Click();
-            driver.FindElement(By.Name("pass")).Clear();
-            driver.FindElement(By.Name("pass")).SendKeys("secret");
-            driver.FindElement(By.XPath("//input[@value='Login']")).Click();
+            OpenHomePage();
+            Login(new AccountData("admin", "secret"));
+            GoToGroupsPage();
+            InintGroupCreation();
+            GroupData group = new GroupData("group1");
+            group.Group_header = "header1";
+            group.Group_footer = "footer1";
+            FillGroupForm(group);
+            SubmitNewGroup();
+            ReturnToGroupsPage();
+        }
 
-            //go to groups
-            driver.FindElement(By.LinkText("groups")).Click();
-
-            //create new group
-            driver.FindElement(By.Name("new")).Click();
-            driver.FindElement(By.Name("group_name")).Click();
-            driver.FindElement(By.XPath("//form[@action='/addressbook/group.php']")).Click();
-            driver.FindElement(By.Name("group_name")).Clear();
-            driver.FindElement(By.Name("group_name")).SendKeys("Group 1");
-            driver.FindElement(By.Name("group_header")).Click();
-            driver.FindElement(By.Name("group_header")).Click();
-            driver.FindElement(By.Name("group_header")).Clear();
-            driver.FindElement(By.Name("group_header")).SendKeys("Group header");
-            driver.FindElement(By.Name("group_footer")).Click();
-            driver.FindElement(By.Name("group_footer")).Clear();
-            driver.FindElement(By.Name("group_footer")).SendKeys("Group footer");
-            driver.FindElement(By.Name("submit")).Click();
+        private void ReturnToGroupsPage()
+        {
             driver.FindElement(By.LinkText("group page")).Click();
+        }
+
+        private void SubmitNewGroup()
+        {
+            driver.FindElement(By.Name("submit")).Click();
+        }
+
+        private void FillGroupForm(GroupData group )
+        {
+            driver.FindElement(By.Name("group_name")).Clear();
+            driver.FindElement(By.Name("group_name")).SendKeys(group.Group_name);
+            driver.FindElement(By.Name("group_header")).Clear();
+            driver.FindElement(By.Name("group_header")).SendKeys(group.Group_header);
+            driver.FindElement(By.Name("group_footer")).Clear();
+            driver.FindElement(By.Name("group_footer")).SendKeys(group.Group_footer);
+        }
+
+        private void InintGroupCreation()
+        {
+            driver.FindElement(By.Name("new")).Click();
+        }
+
+        private void GoToGroupsPage()
+        {
+            driver.FindElement(By.LinkText("groups")).Click();
+        }
+
+        private void Login(AccountData account)
+        {
+            driver.FindElement(By.Name("user")).Clear();
+            driver.FindElement(By.Name("user")).SendKeys(account.Username);
+            driver.FindElement(By.Name("pass")).Clear();
+            driver.FindElement(By.Name("pass")).SendKeys(account.Password);
+            driver.FindElement(By.CssSelector("input[type=\"Submit\"]")).Click();
+        }
+
+        private void OpenHomePage()
+        {
+          
+            driver.Navigate().GoToUrl(baseURL + "/addressbook");
         }
 
         private bool IsElementPresent(By by)
