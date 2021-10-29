@@ -6,24 +6,22 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 
 
+//Responsibility is shared. Tests do only testing. In future if the app changes we do not need to change the test, only change the supporting helpers
+
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests :TestBase
+    public class GroupRemovalTests :TestBase
     {
-     
+       
         [Test]
-        public void GroupCreationTest()
+        public void GroupRemovalTest()
         {
             GoToHomePage();
             Login(new AccountData("admin", "secret"));
             GoToGroupsPage();
-            InintGroupCreation();
-            GroupData group = new GroupData("group1");
-            group.Group_header = "header1";
-            group.Group_footer = "footer1";
-            FillGroupForm(group);
-            SubmitNewGroup();
+            SelectGroup(1);
+            RemoveGroup();
             ReturnToGroupsPage();
         }
 
