@@ -15,9 +15,9 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-            GoToHomePage();
-            Login(new AccountData("admin", "secret"));
-            GoToContactsPage();
+            navigator.GoToHomePage();
+            loginHelper.Login(new AccountData("admin", "secret"));
+            navigator.GoToContactsPage();
             ContactData contact = new ContactData("Natalia", "Stoyanova", "08968756");
             //contact.Firstname = "Natalia";             
             contact.Middlename= "Yurieva";
@@ -45,9 +45,9 @@ namespace WebAddressbookTests
             contact.Phone2 = "09898786";
             contact.Notes = "notes";
 
-            FillContactForm(contact);
-            SubmitNewContact();
-            GoToHomePageContactsTable();
+            contactHelper.FillContactForm(contact);
+            contactHelper.SubmitNewContact();
+            navigator.GoToHomePageContactsTable();
         }
 
     }
