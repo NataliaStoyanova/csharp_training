@@ -73,6 +73,7 @@
     <Compile Include="GroupData.cs" />
     <Compile Include="GroupHelper.cs" />
     <Compile Include="GroupRemovalTest.cs" />
+    <Compile Include="HelperBase.cs" />
     <Compile Include="LoginHelper.cs" />
     <Compile Include="NavigationHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

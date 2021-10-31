@@ -7,6 +7,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+//TestBase is responsible for intialisation and for stopping the brawser 
 
 namespace WebAddressbookTests
 {

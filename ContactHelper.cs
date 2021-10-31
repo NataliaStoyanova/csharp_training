@@ -7,16 +7,15 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+//ContactHelper Responsible for interactions with application under test(contacts part)
 
 namespace WebAddressbookTests
 {
-    public class ContactHelper
+    public class ContactHelper : HelperBase
     {
-        private IWebDriver driver;
-
-        public ContactHelper(IWebDriver driver)
+     
+        public ContactHelper(IWebDriver driver) : base(driver)
         {
-            this.driver = driver;
         }
 
         public void SubmitNewContact()
