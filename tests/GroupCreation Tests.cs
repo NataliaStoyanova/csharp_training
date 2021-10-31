@@ -27,11 +27,11 @@ namespace WebAddressbookTests
         public void EmptyGroupCreationTest()
         {
             
-            GroupData group = new GroupData("");
-            group.Group_header = "";
-            group.Group_footer = "";
+            GroupData emptygroup = new GroupData("");
+            emptygroup.Group_header = "";
+            emptygroup.Group_footer = "";
 
-            app.GroupHelper.Create(group);
+            app.GroupHelper.Create(emptygroup);
         }
 
     }

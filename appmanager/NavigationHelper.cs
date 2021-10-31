@@ -20,24 +20,35 @@ namespace WebAddressbookTests
             this.baseURL = baseURL;
         }
 
-        public void GoToHomePage()
+        public NavigationHelper GoToHomePage()
         {
             driver.Navigate().GoToUrl(baseURL + "/addressbook");
+            return this;
         }
-        public void GoToGroupsPage()
+        public NavigationHelper GoToGroupsPage()
         {
             driver.FindElement(By.LinkText("groups")).Click();
+            return this;
         }
 
-        public void GoToContactsPage()
+        public NavigationHelper GoToContactsPage()
         {
-            driver.FindElement(By.LinkText("add new")).Click();
+            //driver.FindElement(By.LinkText("add new")).Click();
+            //return this;
+            return GoToHomePage();
         }
 
-        public void GoToHomePageContactsTable()
+        public NavigationHelper GoToHomePageContactsTable()
         {
             driver.FindElement(By.LinkText("home page")).Click();
             driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[2]/td[2]")).Click();
+            return this;
+        }
+
+        public NavigationHelper InitContactModification(int i)
+        {
+            driver.Navigate().GoToUrl(baseURL + "/addressbook/edit.php?id="+ i );
+            return this;
         }
     }
 }

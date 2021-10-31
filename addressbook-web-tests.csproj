@@ -70,9 +70,12 @@
     <Compile Include="folder\ContactData.cs" />
     <Compile Include="tests\ContactCreationTests.cs" />
     <Compile Include="appmanager\ContactHelper.cs" />
+    <Compile Include="tests\ContactModificationTests.cs" />
+    <Compile Include="tests\ContactRemovalTests.cs" />
     <Compile Include="tests\GroupCreation Tests.cs" />
     <Compile Include="folder\GroupData.cs" />
     <Compile Include="appmanager\GroupHelper.cs" />
+    <Compile Include="tests\GroupModificationTests.cs" />
     <Compile Include="tests\GroupRemovalTest.cs" />
     <Compile Include="appmanager\HelperBase.cs" />
     <Compile Include="appmanager\LoginHelper.cs" />

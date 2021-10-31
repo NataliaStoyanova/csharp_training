@@ -1,0 +1,25 @@
+﻿using System;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using NUnit.Framework;
+
+namespace WebAddressbookTests
+{
+    [TestFixture]
+    public class GroupModificationTests : TestBase
+    {
+
+        [Test]
+        public void GroupModificationTest()
+        {
+            GroupData newdata = new GroupData("groupM");
+            newdata.Group_header = "headerM";
+            newdata.Group_footer = "footerM";
+            app.GroupHelper.ModifyGroup(1, newdata);
+        }
+
+
+    }
+}
