@@ -26,12 +26,23 @@ namespace WebAddressbookTests
         public GroupHelper GroupHelper { get => groupHelper; }
         public ContactHelper ContactHelper { get => contactHelper; }
 
+        public IWebDriver Driver { get => driver; }
+        
+
         public ApplicationManager()
         {
-            loginHelper = new LoginHelper(driver);
-            navigator = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
-            contactHelper = new ContactHelper(driver);
+
+            driver = new FirefoxDriver();
+            baseURL = "http://localhost";
+
+            loginHelper = new LoginHelper(this);
+            navigator = new NavigationHelper(this, baseURL);
+            groupHelper = new GroupHelper(this);
+            contactHelper = new ContactHelper(this);
+
+
+        
+            //verificationErrors = new StringBuilder();     
         }
 
         public void Stop()

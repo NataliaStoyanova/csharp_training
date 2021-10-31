@@ -21,9 +21,7 @@ namespace WebAddressbookTests
 
             app.Navigator.GoToHomePage();
             app.Auth.Login(new AccountData("admin", "secret"));
-            //driver = new FirefoxDriver();
-            //baseURL = "http://localhost";
-            //verificationErrors = new StringBuilder();          
+     
         }
 
         [TearDown]

@@ -14,9 +14,18 @@ namespace WebAddressbookTests
     public class ContactHelper : HelperBase
     {
      
-        public ContactHelper(IWebDriver driver) : base(driver)
+        public ContactHelper(ApplicationManager manager) : base(manager)
         {
         }
+
+        public ContactHelper Create(ContactData contact)
+        {
+            manager.Navigator.GoToContactsPage();
+            FillContactForm(contact);
+            SubmitNewContact();
+            return this;
+        }
+
 
         public ContactHelper SubmitNewContact()
         {
