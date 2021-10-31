@@ -7,35 +7,34 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
-//TestBase is responsible for intialisation and for stopping the brawser 
 
 namespace WebAddressbookTests
 {
-    public class TestBase
+    public class ApplicationManager
     {
         protected IWebDriver driver;
-        protected StringBuilder verificationErrors;
+        protected string baseURL;
+
+
         protected LoginHelper loginHelper;
         protected NavigationHelper navigator;
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
-        protected string baseURL;
-        protected bool acceptNextAlert = true;
 
-        [SetUp]
-        public void SetupTest()
+        public LoginHelper Auth { get => loginHelper; }
+        public NavigationHelper Navigator { get => navigator; }
+        public GroupHelper GroupHelper { get => groupHelper; }
+        public ContactHelper ContactHelper { get => contactHelper; }
+
+        public ApplicationManager()
         {
-            driver = new FirefoxDriver();
-            baseURL = "http://localhost";
-            verificationErrors = new StringBuilder();
             loginHelper = new LoginHelper(driver);
             navigator = new NavigationHelper(driver, baseURL);
             groupHelper = new GroupHelper(driver);
             contactHelper = new ContactHelper(driver);
         }
 
-        [TearDown]
-        public void TeardownTest()
+        public void Stop()
         {
             try
             {
@@ -45,7 +44,7 @@ namespace WebAddressbookTests
             {
                 // Ignore errors if unable to close the browser
             }
-            Assert.AreEqual("", verificationErrors.ToString());
+            
         }
 
     }
