@@ -44,8 +44,8 @@ namespace WebAddressbookTests
             contact.Notes = "notes";
 
             app.ContactHelper.Create(contact);
-               
-            app.Navigator.GoToHomePageContactsTable();
+
+            app.Navigator.GoToContactsPage();
         }
 
     }
