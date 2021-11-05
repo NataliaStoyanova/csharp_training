@@ -23,13 +23,5 @@ namespace WebAddressbookTests
             app.Auth.Login(new AccountData("admin", "secret"));
         }
 
-        [TearDown]
-        public void StopApplicationManager()
-        {
-            //Singletone
-            ApplicationManager.GetInstance().Stop();
-
-        }
-
     }
 }

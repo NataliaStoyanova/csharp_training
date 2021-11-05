@@ -23,7 +23,10 @@ namespace WebAddressbookTests
 
 
         //This is the unique instance of ApplicationManager class and to ensure is's uniqueness AppManager constructor is set private
-        private static ApplicationManager instance;
+        //private static ApplicationManager instance;
+
+        //ThreadLocal<ApplicationManager> is a special objects that defines the mapping between the current thread and the instance of ApplicationManager 
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
         public LoginHelper Auth { get => loginHelper; }
         public NavigationHelper Navigator { get => navigator; }
@@ -44,26 +47,10 @@ namespace WebAddressbookTests
             navigator = new NavigationHelper(this, baseURL);
             groupHelper = new GroupHelper(this);
             contactHelper = new ContactHelper(this);
-
-
-        
-            //verificationErrors = new StringBuilder();     
         }
 
-        //Singletone
-        //this is statis method => it is global and can be called ApplicationManager.GetInstance
-        //should return an instance of ApplicationManager object, which instance?
-        //we construct AppManger in GetInstance() only if it hasn't been created yet
-        public static ApplicationManager GetInstance()
-        {
-            if (instance == null)
-            {
-                instance = new ApplicationManager();
-            }
-            return instance;
-        }
-
-        public void Stop()
+        //method Stop moved in destructor 
+        ~ApplicationManager()
         {
             try
             {
@@ -73,7 +60,29 @@ namespace WebAddressbookTests
             {
                 // Ignore errors if unable to close the browser
             }
-            
+        }
+
+        //Singletone
+        //this is statis method => it is global and can be called ApplicationManager.GetInstance
+        //should return an instance of ApplicationManager object, which instance?
+        //we construct AppManger in GetInstance() only if it hasn't been created yet
+        /* public static ApplicationManager GetInstance()
+         {
+             if (instance == null)
+             {
+                 instance = new ApplicationManager();
+             }
+             return instance;
+         }*/
+
+        //GetInstance returns different instances for different threads 
+        public static ApplicationManager GetInstance()
+        {
+            if (!app.IsValueCreated)
+            {
+                app.Value = new ApplicationManager();
+            }
+            return app.Value;
         }
 
     }
