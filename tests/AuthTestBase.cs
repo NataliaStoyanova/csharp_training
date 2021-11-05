@@ -12,7 +12,8 @@ namespace WebAddressbookTests
     {
         [SetUp]
         public void SetUpLogin()
-        {            
+        {
+            
             app.Auth.Login(new AccountData("admin", "secret"));
         }
 

@@ -33,11 +33,11 @@ namespace WebAddressbookTests
             app.Auth.Logout();
 
             //steps
-            AccountData account = new AccountData("admin", "secrrret");
-            app.Auth.Login(account);
+            AccountData invalidaccount = new AccountData("admin", "trhetuiwegtu");
+            app.Auth.Login(invalidaccount);
 
             //verification
-            Assert.IsFalse(app.Auth.isLoggedIn(account));
+            Assert.IsFalse(app.Auth.isLoggedIn(invalidaccount));
 
         }
 

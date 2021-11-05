@@ -7,6 +7,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Chrome;
 
 namespace WebAddressbookTests
 {
@@ -18,11 +19,7 @@ namespace WebAddressbookTests
         {
         }
 
-        public GroupHelper InintGroupCreation()
-        {
-            driver.FindElement(By.Name("new")).Click();
-            return this;
-        }
+
 
         public GroupHelper ModifyGroup(int v, GroupData newdata)
         {
@@ -31,18 +28,6 @@ namespace WebAddressbookTests
             InitGroupModification();
             FillGroupForm(newdata);
             SubmitGroupModification();
-            return this;
-        }
-
-        public GroupHelper SubmitGroupModification()
-        {
-            driver.FindElement(By.Name("update")).Click();
-            return this;
-        }
-
-        public GroupHelper InitGroupModification()
-        {
-            driver.FindElement(By.Name("edit")).Click();
             return this;
         }
 
@@ -82,7 +67,16 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
             return this;
         }
-
+        public GroupHelper SubmitGroupModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+        public GroupHelper InintGroupCreation()
+        {
+            driver.FindElement(By.Name("new")).Click();
+            return this;
+        }
         public GroupHelper SubmitNewGroup()
         {
             driver.FindElement(By.Name("submit")).Click();
@@ -94,7 +88,11 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("delete")).Click();
             return this;
         }
-
+        public GroupHelper InitGroupModification()
+        {
+            driver.FindElement(By.Name("edit")).Click();
+            return this;
+        }
         public GroupHelper ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("groups")).Click();

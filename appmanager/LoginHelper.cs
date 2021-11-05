@@ -7,6 +7,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Chrome;
 
 namespace WebAddressbookTests
 {
@@ -37,9 +38,9 @@ namespace WebAddressbookTests
         {
             if (isLoggedIn()) 
             {
-                driver.FindElement(By.LinkText("logout")).Click();
-            }
-       
+                driver.FindElement(By.LinkText("Logout")).Click();
+                driver.FindElement(By.Name("user"));
+            }       
         }
 
         public bool isLoggedIn()

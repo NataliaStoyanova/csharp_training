@@ -5,8 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+
 
 namespace WebAddressbookTests
 {
@@ -41,6 +43,7 @@ namespace WebAddressbookTests
         {
 
             driver = new FirefoxDriver();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
             baseURL = "http://localhost";
 
             loginHelper = new LoginHelper(this);

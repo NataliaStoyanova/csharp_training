@@ -7,7 +7,7 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
-
+using OpenQA.Selenium.Chrome;
 namespace WebAddressbookTests
 {
     public class NavigationHelper : HelperBase
@@ -20,20 +20,34 @@ namespace WebAddressbookTests
             this.baseURL = baseURL;
         }
 
-        public NavigationHelper GoToHomePage()
+        public void GoToHomePage()
         {
-            driver.Navigate().GoToUrl(baseURL + "/addressbook");
-            return this;
+
+            if (driver.Url == baseURL + "/addressbook/")
+            {
+                return;
+            }
+            driver.Navigate().GoToUrl(baseURL + "/addressbook/");       
         }
-        public NavigationHelper GoToGroupsPage()
+        public void GoToGroupsPage()
         {
+            if (driver.Url == baseURL + "/addressbook/group.php" && IsElementPresent(By.Name("new")))
+                    
+                    {
+                        return;
+                    }
+
             driver.FindElement(By.LinkText("groups")).Click();
-            return this;
+            
         }
 
-        public NavigationHelper GoToContactsPage()
+        public void GoToContactsPage()
         {
-            return GoToHomePage();
+            if (driver.Url == baseURL + "/addressbook/" && IsElementPresent(By.Id("maintable")))
+            {
+                return;
+            }
+            driver.Navigate().GoToUrl(baseURL + "/addressbook/");
         }
 
         public NavigationHelper InitContactCreation()
