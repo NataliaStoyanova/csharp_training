@@ -9,16 +9,16 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     public class TestBase
-    {
-   
+    {  
         //protected bool acceptNextAlert = true;
         protected ApplicationManager app;
 
         [SetUp]
-        public void SetupTest()
+        public void SetUpApplicationManager()
         {
             //Singletone
-            app = ApplicationManager.GetInstance();     
+           app = ApplicationManager.GetInstance();
+           
         }
     }
 }

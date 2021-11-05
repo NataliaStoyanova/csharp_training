@@ -5,7 +5,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
+//This Global Fixture will not be used futher.
+//will leave it here for info
 
+/*
 namespace WebAddressbookTests
 {
     [SetUpFixture]
@@ -19,9 +22,9 @@ namespace WebAddressbookTests
         {
             //Singletone
             ApplicationManager app = ApplicationManager.GetInstance();
-            app.Navigator.GoToHomePage();
-            app.Auth.Login(new AccountData("admin", "secret"));
+           
         }
 
     }
 }
+*/
