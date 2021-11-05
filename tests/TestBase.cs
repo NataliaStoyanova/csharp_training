@@ -17,7 +17,8 @@ namespace WebAddressbookTests
         [SetUp]
         public void SetupTest()
         {
-            app = TestSuiteFixture.app;     
+            //Singletone
+            app = ApplicationManager.GetInstance();     
         }
     }
 }

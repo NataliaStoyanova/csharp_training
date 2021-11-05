@@ -21,15 +21,20 @@ namespace WebAddressbookTests
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
 
+
+        //This is the unique instance of ApplicationManager class and to ensure is's uniqueness AppManager constructor is set private
+        private static ApplicationManager instance;
+
         public LoginHelper Auth { get => loginHelper; }
         public NavigationHelper Navigator { get => navigator; }
         public GroupHelper GroupHelper { get => groupHelper; }
         public ContactHelper ContactHelper { get => contactHelper; }
 
         public IWebDriver Driver { get => driver; }
-        
 
-        public ApplicationManager()
+
+        //no one outside ApplicatinManager class must not create other instances 
+        private ApplicationManager()
         {
 
             driver = new FirefoxDriver();
@@ -43,6 +48,19 @@ namespace WebAddressbookTests
 
         
             //verificationErrors = new StringBuilder();     
+        }
+
+        //Singletone
+        //this is statis method => it is global and can be called ApplicationManager.GetInstance
+        //should return an instance of ApplicationManager object, which instance?
+        //we construct AppManger in GetInstance() only if it hasn't been created yet
+        public static ApplicationManager GetInstance()
+        {
+            if (instance == null)
+            {
+                instance = new ApplicationManager();
+            }
+            return instance;
         }
 
         public void Stop()

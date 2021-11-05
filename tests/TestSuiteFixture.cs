@@ -11,13 +11,14 @@ namespace WebAddressbookTests
     [SetUpFixture]
     public class TestSuiteFixture
     {
-        public static ApplicationManager app;
+        //public static ApplicationManager app;
         //this way we cannot run our tests in parallel, we cannot work with the same brawser in several parallel threads
 
         [SetUp]
         public void InitApplicationManger()
         {
-            app = new ApplicationManager();
+            //Singletone
+            ApplicationManager app = ApplicationManager.GetInstance();
             app.Navigator.GoToHomePage();
             app.Auth.Login(new AccountData("admin", "secret"));
         }
@@ -25,7 +26,8 @@ namespace WebAddressbookTests
         [TearDown]
         public void StopApplicationManager()
         {
-            app.Stop();
+            //Singletone
+            ApplicationManager.GetInstance().Stop();
 
         }
 
