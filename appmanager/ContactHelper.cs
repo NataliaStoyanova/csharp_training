@@ -42,17 +42,53 @@ namespace WebAddressbookTests
         public ContactHelper RemoveContact(int tr)
         {
             manager.Navigator.GoToContactsPage();
-            SelectContact(tr);
-            DeleteContact();
+            DeleteContact(tr);
             return this;
         }
 
-        public ContactHelper DeleteContact()
-        {
-            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-            driver.SwitchTo().Alert().Accept();
+        public ContactHelper DeleteContact(int index)
+        {       
+            if (DoesTheContactExist(index))
+            {
+                SelectContact(index);
+                driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+                driver.SwitchTo().Alert().Accept();
+            }
+            else
+            {
+                ContactData newContact = new ContactData("ForRemovalName", "ForRemovalLastName", "98786785664");          
+                Create(newContact);
+                manager.Navigator.GoToContactsPage();
+                SelectContact(index);
+                driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+                driver.SwitchTo().Alert().Accept();
+
+            }
             return this;
         }
+
+        public ContactHelper InitContactModification(int row2)
+        {
+           
+            if (DoesTheContactExist(row2))
+
+            {
+                SelectContact(row2);
+                driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row2 + 1) + "]/td[8]/a")).Click();
+            }
+            else
+            {
+                ContactData newContact = new ContactData("ForModifyName", "ForModifyLastName", "98786785664");
+                Create(newContact);
+                manager.Navigator.GoToContactsPage();
+                SelectContact(row2);
+                driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row2 + 1) + "]/td[8]/a")).Click();
+
+            }
+            return this;
+
+        }
+
         public ContactHelper SubmitContactModification()
         {          
             driver.FindElement(By.Name("update")).Click();
@@ -103,15 +139,13 @@ namespace WebAddressbookTests
         }      
         public ContactHelper SelectContact(int row)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row+1) + "]/td/input")).Click();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row+1) + "]/td[1]/input")).Click();
             return this;
         }
-      
-        public ContactHelper InitContactModification(int row2)
+        public bool DoesTheContactExist(int ii)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row2+1) + "]/td[8]/a")).Click();
-            return this;
+            return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + (ii + 1) + "]/td[1]"));           
         }
-      
+
     }
 }

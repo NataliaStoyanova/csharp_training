@@ -23,9 +23,8 @@ namespace WebAddressbookTests
 
         public GroupHelper ModifyGroup(int v, GroupData newdata)
         {
-            manager.Navigator.GoToGroupsPage();
-            SelectGroup(v);
-            InitGroupModification();
+            manager.Navigator.GoToGroupsPage();         
+            InitGroupModification(v);
             FillGroupForm(newdata);
             SubmitGroupModification();
             return this;
@@ -38,16 +37,14 @@ namespace WebAddressbookTests
             InintGroupCreation();
             FillGroupForm(group);
             SubmitNewGroup();
-            ReturnToGroupsPage();
-            ReturnToGroupsPage();
+            ReturnToGroupsPage();           
             return this;
         }
 
         public GroupHelper RemoveGroup(int a)
         {
-            manager.Navigator.GoToGroupsPage();
-            SelectGroup(a);
-            RemoveGroup();
+            manager.Navigator.GoToGroupsPage();           
+            DeleteGroup(a);
             ReturnToGroupsPage();
             return this;
         }
@@ -60,13 +57,41 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public GroupHelper DeleteGroup(int ii)
+        {
 
+            if (DoesTheGroupExist(ii))
+
+            {
+                SelectGroup(ii);
+                driver.FindElement(By.Name("delete")).Click();
+            }
+            else
+            {
+                GroupData group = new GroupData("group1");
+                group.Group_header = "header1";
+                group.Group_footer = "footer1";               
+                Create(group);
+                SelectGroup(ii);
+                driver.FindElement(By.Name("delete")).Click();
+
+            }            
+            return this;
+        }
 
         public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
             return this;
         }
+
+
+        public bool DoesTheGroupExist(int i)
+        {
+            return IsElementPresent(By.XPath("//form[1]/span["+ i +"]/input[1]"));
+        }
+
+
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
@@ -83,14 +108,25 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper RemoveGroup()
+
+        public GroupHelper InitGroupModification(int iii)
         {
-            driver.FindElement(By.Name("delete")).Click();
-            return this;
-        }
-        public GroupHelper InitGroupModification()
-        {
-            driver.FindElement(By.Name("edit")).Click();
+            if (DoesTheGroupExist(iii))
+
+            {
+                SelectGroup(iii);
+                driver.FindElement(By.Name("edit")).Click();
+            }
+            else
+            {
+                GroupData group = new GroupData("group1");
+                group.Group_header = "header1";
+                group.Group_footer = "footer1";
+                Create(group);
+                SelectGroup(iii);
+                driver.FindElement(By.Name("edit")).Click();
+
+            }
             return this;
         }
         public GroupHelper ReturnToGroupsPage()
