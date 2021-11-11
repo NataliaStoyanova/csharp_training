@@ -3,7 +3,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using NUnit.Framework;
+
 
 namespace WebAddressbookTests
 {
@@ -14,10 +16,49 @@ namespace WebAddressbookTests
         [Test]
         public void GroupModificationTest()
         {
-            GroupData newdata = new GroupData("groupM");
-            newdata.Group_header = null;
-            newdata.Group_footer = null;
-            app.GroupHelper.ModifyGroup(1, newdata);
+
+            List<GroupData> oldGroups = null;
+
+
+            if (app.GroupHelper.DoesTheGroupExist(0))
+
+            {
+                oldGroups = app.GroupHelper.GetGroupList();
+                
+                GroupData newdata = new GroupData("groupM");
+                newdata.Group_header = null;
+                newdata.Group_footer = null;
+                app.GroupHelper.ModifyGroup(0, newdata);
+
+                oldGroups[0].Group_name = newdata.Group_name;
+            }
+            else
+            {
+                GroupData group = new GroupData("group1");
+                group.Group_header = "header1";
+                group.Group_footer = "footer1";
+
+                app.GroupHelper.Create(group);
+
+                oldGroups = app.GroupHelper.GetGroupList();
+
+                GroupData newdata = new GroupData("groupM");
+                newdata.Group_header = null;
+                newdata.Group_footer = null;
+
+                app.GroupHelper.ModifyGroup(0, newdata);
+
+                oldGroups[0].Group_name = newdata.Group_name;
+
+            }
+
+            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
+          
+            oldGroups.Sort();
+            newGroups.Sort();
+
+            Assert.AreEqual(oldGroups, newGroups);
+       
         }
 
 

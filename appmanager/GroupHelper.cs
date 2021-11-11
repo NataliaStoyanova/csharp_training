@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Chrome;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -18,9 +19,6 @@ namespace WebAddressbookTests
         public GroupHelper(ApplicationManager manager): base(manager)
         {
         }
-
-
-
         public GroupHelper ModifyGroup(int v, GroupData newdata)
         {
             manager.Navigator.GoToGroupsPage();         
@@ -28,6 +26,26 @@ namespace WebAddressbookTests
             FillGroupForm(newdata);
             SubmitGroupModification();
             return this;
+        }
+
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+
+            manager.Navigator.GoToGroupsPage();
+            
+            
+            ICollection<IWebElement>  elements  = driver.FindElements(By.CssSelector("span.group"));
+
+            foreach (IWebElement element in elements)
+            {
+                //System.Console.Out.Write(element.Text + "\n");
+
+                groups.Add(new GroupData(element.Text));
+
+            }
+
+            return groups;
         }
 
         public GroupHelper Create(GroupData group)
@@ -57,7 +75,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper DeleteGroup(int ii)
+      /*  public GroupHelper DeleteGroup(int ii)
         {
 
             if (DoesTheGroupExist(ii))
@@ -78,17 +96,27 @@ namespace WebAddressbookTests
             }            
             return this;
         }
+      */
+        public GroupHelper DeleteGroup(int ii)
+        {          
+                SelectGroup(ii);
+                driver.FindElement(By.Name("delete")).Click();             
+                return this;
+        }
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("//div[@id='content']/form/span[" + index + "]/input")).Click();
+            driver.FindElement(By.XPath("//div[@id='content']/form/span[" + (index+1) + "]/input")).Click();
             return this;
         }
 
 
         public bool DoesTheGroupExist(int i)
         {
-            return IsElementPresent(By.XPath("//form[1]/span["+ i +"]/input[1]"));
+       
+            manager.Navigator.GoToGroupsPage();
+            return IsElementPresent(By.XPath("//div[@id='content']/form[1]/span[" + (i + 1) + "]"));
+
         }
 
 
@@ -109,26 +137,34 @@ namespace WebAddressbookTests
         }
 
 
+        /*  public GroupHelper InitGroupModification(int iii)
+          {
+              if (DoesTheGroupExist(iii))
+
+              {
+                  SelectGroup(iii);
+                  driver.FindElement(By.Name("edit")).Click();
+              }
+              else
+              {
+                  GroupData group = new GroupData("group1");
+                  group.Group_header = "header1";
+                  group.Group_footer = "footer1";
+                  Create(group);
+                  SelectGroup(iii);
+                  driver.FindElement(By.Name("edit")).Click();
+
+              }
+              return this;
+          }
+        */
         public GroupHelper InitGroupModification(int iii)
-        {
-            if (DoesTheGroupExist(iii))
-
-            {
+        {   
                 SelectGroup(iii);
-                driver.FindElement(By.Name("edit")).Click();
-            }
-            else
-            {
-                GroupData group = new GroupData("group1");
-                group.Group_header = "header1";
-                group.Group_footer = "footer1";
-                Create(group);
-                SelectGroup(iii);
-                driver.FindElement(By.Name("edit")).Click();
-
-            }
-            return this;
+                driver.FindElement(By.Name("edit")).Click();       
+                return this;
         }
+
         public GroupHelper ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("groups")).Click();

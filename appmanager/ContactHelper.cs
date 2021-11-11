@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Chrome;
+using System.Collections.Generic;
 //ContactHelper Responsible for interactions with application under test(contacts part)
 
 namespace WebAddressbookTests
@@ -43,50 +44,51 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToContactsPage();
             DeleteContact(tr);
+            Thread.Sleep(3000);
             return this;
         }
 
         public ContactHelper DeleteContact(int index)
         {       
-            if (DoesTheContactExist(index))
-            {
+           
                 SelectContact(index);
                 driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
                 driver.SwitchTo().Alert().Accept();
-            }
-            else
-            {
-                ContactData newContact = new ContactData("ForRemovalName", "ForRemovalLastName", "98786785664");          
-                Create(newContact);
-                manager.Navigator.GoToContactsPage();
-                SelectContact(index);
-                driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
-                driver.SwitchTo().Alert().Accept();
+                return this;
+        }
 
+        public List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+
+            manager.Navigator.GoToContactsPage();
+
+            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//table[@id='maintable']/tbody/tr"));
+
+            foreach (IWebElement tr in elements)
+            {
+                var tds = tr.FindElements(By.TagName("td"));
+                if (tds.Count > 0)
+                {
+                    var firstName = tds[2].Text;
+                    var lastName = tds[1].Text;
+
+                    contacts.Add(new ContactData
+                    {
+                        Firstname = firstName,
+                        Lastname = lastName
+                    });
+                }
             }
-            return this;
+
+            return contacts;
         }
 
         public ContactHelper InitContactModification(int row2)
-        {
-           
-            if (DoesTheContactExist(row2))
-
-            {
+        {           
                 SelectContact(row2);
-                driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row2 + 1) + "]/td[8]/a")).Click();
-            }
-            else
-            {
-                ContactData newContact = new ContactData("ForModifyName", "ForModifyLastName", "98786785664");
-                Create(newContact);
-                manager.Navigator.GoToContactsPage();
-                SelectContact(row2);
-                driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row2 + 1) + "]/td[8]/a")).Click();
-
-            }
-            return this;
-
+                driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row2 + 2) + "]/td[8]/a")).Click();        
+                return this;
         }
 
         public ContactHelper SubmitContactModification()
@@ -139,12 +141,14 @@ namespace WebAddressbookTests
         }      
         public ContactHelper SelectContact(int row)
         {
-            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row+1) + "]/td[1]/input")).Click();
+            manager.Navigator.GoToContactsPage();
+            driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row+2) + "]/td[1]/input")).Click();
             return this;
         }
         public bool DoesTheContactExist(int ii)
         {
-            return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + (ii + 1) + "]/td[1]"));           
+            manager.Navigator.GoToContactsPage();
+            return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[" + (ii + 2) + "]"));           
         }
 
     }

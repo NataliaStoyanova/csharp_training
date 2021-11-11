@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
-    public class ContactData
+    public class ContactData : IComparable<ContactData>, IEquatable<ContactData>
     {
         private string firstname;
         private string middlename;
@@ -33,6 +33,15 @@ namespace WebAddressbookTests
         private string address2;
         private string phone2;
         private string notes;
+
+        public ContactData()
+        {
+        }
+
+        public ContactData(string text)
+        {
+            this.firstname = text;
+        }
 
         public ContactData(string firstname, string lastname, string mobile)
         {
@@ -95,5 +104,49 @@ namespace WebAddressbookTests
         public string Notes { get => notes; set => notes = value; }
         public string Phone2 { get => phone2; set => phone2 = value; }
         public string Address2 { get => address2; set => address2 = value; }
+
+        public int CompareTo(ContactData other)
+        {
+            //if the second object  is null, then our object is greater
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
+            if (Object.ReferenceEquals(other.Firstname, Firstname))
+
+            {
+                return Lastname.CompareTo(other.Lastname);
+            }
+            else
+            { 
+                return Firstname.CompareTo(other.Firstname);            
+            }
+                
+        }
+
+        public bool Equals(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return false;
+            }
+
+            if (Object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            return Firstname == other.Firstname && Lastname == other.Lastname;
+        }
+
+        public override int GetHashCode()
+        {
+            return Firstname.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return "Firstname= " + Firstname;
+        }
     }
 }

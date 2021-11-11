@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressbookTests
 {
-    public class GroupData
+    public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
         private string group_name;
         private string group_header = "";
@@ -27,5 +27,46 @@ namespace WebAddressbookTests
         public string Group_name { get => group_name; set => group_name = value; }
         public string Group_header { get => group_header; set => group_header = value; }
         public string Group_footer { get => group_footer; set => group_footer = value; }
+
+
+        //returns "1" - if this object is grt with our compare rule then the second object
+        //returns "0" - if objects are equal
+        //returns "-1" - if this object is less with our compare rule the second object
+        public int CompareTo(GroupData other)
+        {
+
+            //if the second object  is null, then our object is greater
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
+
+            return Group_name.CompareTo(other.Group_name);
+        }
+
+        public bool Equals(GroupData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return false;
+            }
+
+            if (Object.ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            return Group_name == other.Group_name;
+        }
+
+        public override int GetHashCode()
+        {
+            return Group_name.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return "name= " + Group_name;
+        }
     }
 }
