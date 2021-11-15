@@ -37,13 +37,14 @@ namespace WebAddressbookTests
             newdata.Group_header = null;
             newdata.Group_footer = null;
             app.GroupHelper.ModifyGroup(0, newdata);
-            oldGroups[0].Group_name = newdata.Group_name;
-            
-            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
-          
+
+            Assert.AreEqual(oldGroups.Count, app.GroupHelper.GetGroupCount());
+
+
+            oldGroups[0].Group_name = newdata.Group_name;          
+            List<GroupData> newGroups = app.GroupHelper.GetGroupList();         
             oldGroups.Sort();
             newGroups.Sort();
-
             Assert.AreEqual(oldGroups, newGroups);
        
         }

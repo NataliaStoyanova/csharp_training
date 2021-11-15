@@ -80,6 +80,12 @@ namespace WebAddressbookTests
             contactM.Phone2 = null;
             contactM.Notes = null;
             app.ContactHelper.Modify(0, contactM);
+
+
+            //Fast check using hash
+            Assert.AreEqual(oldContacts.Count, app.ContactHelper.GetContactCount());
+
+            //Slow check
             oldContacts[0].Firstname = contactM.Firstname;
             oldContacts[0].Lastname = contactM.Lastname;
             oldContacts[0].Mobile = contactM.Mobile;

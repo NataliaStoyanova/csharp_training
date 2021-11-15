@@ -16,7 +16,9 @@ namespace WebAddressbookTests
         [Test]
         public void ContactCreationTest()
         {
-           
+            List<ContactData> oldContacts = app.ContactHelper.GetContactList();
+
+
             ContactData contact = new ContactData("Batalia", "Stoyanova", "08968756");
             //contact.Firstname = "Natalia";             
             contact.Middlename= "Yurieva";
@@ -42,19 +44,18 @@ namespace WebAddressbookTests
             contact.Ayear = "2018";
             contact.Address2 = "Tsarevo";
             contact.Phone2 = "09898786";
-            contact.Notes = "notes";
-
-            List<ContactData> oldContacts = app.ContactHelper.GetContactList();
-
+            contact.Notes = "notes";         
             app.ContactHelper.Create(contact);
 
+            //Fast check using hash
+            Assert.AreEqual(oldContacts.Count + 1, app.ContactHelper.GetContactCount());
+
+
+            //Slow check
             List<ContactData> newContacts = app.ContactHelper.GetContactList();
-
             oldContacts.Add(contact);
-
             oldContacts.Sort();
             newContacts.Sort();
-
             Assert.AreEqual(oldContacts, newContacts);            
         }
 

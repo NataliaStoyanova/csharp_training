@@ -32,6 +32,11 @@ namespace WebAddressbookTests
                
             }
             app.ContactHelper.RemoveContact(0);
+
+            //Fast check using hash
+            Assert.AreEqual(oldContacs.Count-1, app.ContactHelper.GetContactCount());
+
+            //Slow check
             List<ContactData> newContacs = app.ContactHelper.GetContactList();
             oldContacs.RemoveAt(0);
             oldContacs.Sort();
