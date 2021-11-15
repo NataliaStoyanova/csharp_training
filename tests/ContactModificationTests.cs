@@ -16,47 +16,11 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-
             List<ContactData> oldContacts = null;
-
-
             if (app.ContactHelper.DoesTheContactExist(0))
 
             {
-                oldContacts = app.ContactHelper.GetContactList();
-
-                ContactData contactM = new ContactData("MVladislav", "MStoyanov", "08968756");
-                //contact.Firstname = "Natalia";             
-                contactM.Middlename = null;
-                //contact.Lastname = "Stoyanova";
-                contactM.Nickname = null;
-                contactM.Photo = null;
-                contactM.Title = null;
-                contactM.Company = null;
-                contactM.Address = null;
-                contactM.Home = null;
-                //contact.Mobile = null;
-                contactM.Work = null;
-                contactM.Fax = null;
-                contactM.Email = null;
-                contactM.Email2 = null;
-                contactM.Email3 = null;
-                contactM.Homepage = null;
-                contactM.Bday = null;
-                contactM.Bmonth = null;
-                contactM.Byear = null;
-                contactM.Aday = null;
-                contactM.Amonth = null;
-                contactM.Ayear = null;
-                contactM.Address2 = null;
-                contactM.Phone2 = null;
-                contactM.Notes = null;
-
-                app.ContactHelper.Modify(0, contactM);
-
-                oldContacts[0].Firstname = contactM.Firstname;
-                oldContacts[0].Lastname = contactM.Lastname;
-                oldContacts[0].Mobile = contactM.Mobile;
+                oldContacts = app.ContactHelper.GetContactList();                
             }
             else
             {
@@ -86,53 +50,44 @@ namespace WebAddressbookTests
                 newcontact.Address2 = null;
                 newcontact.Phone2 = null;
                 newcontact.Notes = null;
-
                 app.ContactHelper.Create(newcontact);
-
                 oldContacts = app.ContactHelper.GetContactList();
-
-                ContactData contactM = new ContactData("MVladislav", "MStoyanov", "08968756");
-                //contact.Firstname = "Natalia";             
-                contactM.Middlename = null;
-                //contact.Lastname = "Stoyanova";
-                contactM.Nickname = null;
-                contactM.Photo = null;
-                contactM.Title = null;
-                contactM.Company = null;
-                contactM.Address = null;
-                contactM.Home = null;
-                //contact.Mobile = null;
-                contactM.Work = null;
-                contactM.Fax = null;
-                contactM.Email = null;
-                contactM.Email2 = null;
-                contactM.Email3 = null;
-                contactM.Homepage = null;
-                contactM.Bday = null;
-                contactM.Bmonth = null;
-                contactM.Byear = null;
-                contactM.Aday = null;
-                contactM.Amonth = null;
-                contactM.Ayear = null;
-                contactM.Address2 = null;
-                contactM.Phone2 = null;
-                contactM.Notes = null;
-
-                app.ContactHelper.Modify(0, contactM);
-
-                oldContacts[0].Firstname = contactM.Firstname;
-                oldContacts[0].Lastname = contactM.Lastname;
-                oldContacts[0].Mobile = contactM.Mobile;
-
             }
-
+            ContactData contactM = new ContactData("MVladislav", "MStoyanov", "08968756");
+            //contact.Firstname = "Natalia";             
+            contactM.Middlename = null;
+            //contact.Lastname = "Stoyanova";
+            contactM.Nickname = null;
+            contactM.Photo = null;
+            contactM.Title = null;
+            contactM.Company = null;
+            contactM.Address = null;
+            contactM.Home = null;
+            //contact.Mobile = null;
+            contactM.Work = null;
+            contactM.Fax = null;
+            contactM.Email = null;
+            contactM.Email2 = null;
+            contactM.Email3 = null;
+            contactM.Homepage = null;
+            contactM.Bday = null;
+            contactM.Bmonth = null;
+            contactM.Byear = null;
+            contactM.Aday = null;
+            contactM.Amonth = null;
+            contactM.Ayear = null;
+            contactM.Address2 = null;
+            contactM.Phone2 = null;
+            contactM.Notes = null;
+            app.ContactHelper.Modify(0, contactM);
+            oldContacts[0].Firstname = contactM.Firstname;
+            oldContacts[0].Lastname = contactM.Lastname;
+            oldContacts[0].Mobile = contactM.Mobile;
             List<ContactData> newContacts = app.ContactHelper.GetContactList();
-
             oldContacts.Sort();
             newContacts.Sort();
 
             Assert.AreEqual(oldContacts, newContacts);
-
         }
 
     }

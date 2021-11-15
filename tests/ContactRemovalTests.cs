@@ -20,30 +20,22 @@ namespace WebAddressbookTests
             
             if (app.ContactHelper.DoesTheContactExist(0))
             {
-                oldContacs = app.ContactHelper.GetContactList();
-                app.ContactHelper.RemoveContact(0);
+                oldContacs = app.ContactHelper.GetContactList();                
             }
             else
             {
                 ContactData contact = new ContactData("ContactNew");
                 contact.Lastname = "ContactNew";
                 contact.Mobile = "ContactNew";
-
                 app.ContactHelper.Create(contact);
-
                 oldContacs = app.ContactHelper.GetContactList();
-
-                app.ContactHelper.RemoveContact(0);
-
+               
             }
-
+            app.ContactHelper.RemoveContact(0);
             List<ContactData> newContacs = app.ContactHelper.GetContactList();
-
             oldContacs.RemoveAt(0);
-
             oldContacs.Sort();
             newContacs.Sort();
-
             Assert.AreEqual(oldContacs, newContacs);
         }
 
