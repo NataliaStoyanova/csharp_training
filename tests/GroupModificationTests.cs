@@ -18,12 +18,14 @@ namespace WebAddressbookTests
         {
 
             List<GroupData> oldGroups = null;
+            GroupData oldData = null;
 
 
             if (app.GroupHelper.DoesTheGroupExist(0))
 
             {
-                oldGroups = app.GroupHelper.GetGroupList();               
+                oldGroups = app.GroupHelper.GetGroupList();
+                oldData = oldGroups[0];
             }
             else
             {
@@ -32,6 +34,7 @@ namespace WebAddressbookTests
                 group.Group_footer = "footer1";
                 app.GroupHelper.Create(group);
                 oldGroups = app.GroupHelper.GetGroupList();
+                oldData = oldGroups[0];
             }
             GroupData newdata = new GroupData("groupM");
             newdata.Group_header = null;
@@ -40,12 +43,21 @@ namespace WebAddressbookTests
 
             Assert.AreEqual(oldGroups.Count, app.GroupHelper.GetGroupCount());
 
-
-            oldGroups[0].Group_name = newdata.Group_name;          
-            List<GroupData> newGroups = app.GroupHelper.GetGroupList();         
+            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
+            oldGroups[0].Group_name = newdata.Group_name;                      
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData group in newGroups)
+            {
+
+                if (group.id == oldData.id)
+                {
+                    Assert.AreEqual(newdata.Group_name, group.Group_name);                
+                }
+            }
+
        
         }
 

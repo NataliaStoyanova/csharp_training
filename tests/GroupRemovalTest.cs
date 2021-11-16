@@ -40,10 +40,19 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldGroups.Count -1, app.GroupHelper.GetGroupCount());
 
             List<GroupData> newGroups = app.GroupHelper.GetGroupList();
+
+
+            GroupData toBeRemoved = oldGroups[0];
+
             oldGroups.RemoveAt(0);
             oldGroups.Sort();
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData group in newGroups)
+            {
+                Assert.AreNotEqual(group.id, toBeRemoved.id);
+            }
         }
 
     }

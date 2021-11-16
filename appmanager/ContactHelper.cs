@@ -66,7 +66,7 @@ namespace WebAddressbookTests
                 manager.Navigator.GoToContactsPage();
                 ICollection<IWebElement> elements = driver.FindElements(By.XPath("//table[@id='maintable']/tbody/tr"));
                 foreach (IWebElement tr in elements)
-                {
+                {                  
                     var tds = tr.FindElements(By.TagName("td"));
                     if (tds.Count > 0)
                     {
@@ -74,11 +74,12 @@ namespace WebAddressbookTests
                         var lastName = tds[1].Text;
 
                         contactCache.Add(new ContactData
-                        {
-                            Firstname = firstName,
-                            Lastname = lastName
-                        }
-                                    );
+                            {
+                                Firstname = firstName,
+                                Lastname = lastName,
+                                id = tr.FindElement(By.TagName("input")).GetAttribute("Value")
+                            }
+                        );
                     }
                 }
 

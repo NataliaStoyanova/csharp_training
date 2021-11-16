@@ -38,10 +38,18 @@ namespace WebAddressbookTests
 
             //Slow check
             List<ContactData> newContacs = app.ContactHelper.GetContactList();
+
+            ContactData contactTobeRemoved = oldContacs[0];
+
             oldContacs.RemoveAt(0);
             oldContacs.Sort();
             newContacs.Sort();
             Assert.AreEqual(oldContacs, newContacs);
+
+            foreach (ContactData contact in newContacs)
+            {
+                Assert.AreNotEqual(contact.id, contactTobeRemoved.id);
+            }
         }
 
     }

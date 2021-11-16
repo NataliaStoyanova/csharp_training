@@ -16,11 +16,17 @@ namespace WebAddressbookTests
         [Test]
         public void ContactModificationTest()
         {
-            List<ContactData> oldContacts = null;
+            List<ContactData> oldContacts;
+            ContactData oldContact;
+
+
             if (app.ContactHelper.DoesTheContactExist(0))
 
             {
-                oldContacts = app.ContactHelper.GetContactList();                
+                oldContacts = app.ContactHelper.GetContactList();
+                oldContact = oldContacts[0];
+
+
             }
             else
             {
@@ -52,6 +58,7 @@ namespace WebAddressbookTests
                 newcontact.Notes = null;
                 app.ContactHelper.Create(newcontact);
                 oldContacts = app.ContactHelper.GetContactList();
+                oldContact = oldContacts[0];
             }
             ContactData contactM = new ContactData("MVladislav", "MStoyanov", "08968756");
             //contact.Firstname = "Natalia";             
@@ -94,6 +101,16 @@ namespace WebAddressbookTests
             newContacts.Sort();
 
             Assert.AreEqual(oldContacts, newContacts);
+
+            foreach (ContactData contact in newContacts)
+            {
+                if (contact.id == oldContact.id)
+                {
+                    Assert.AreEqual(contactM.Firstname, contact.Firstname);
+                    Assert.AreEqual(contactM.Lastname, contact.Lastname);
+                }
+            
+            }
         }
 
     }
