@@ -64,22 +64,27 @@ namespace WebAddressbookTests
             {
                 contactCache = new List<ContactData>();
                 manager.Navigator.GoToContactsPage();
-                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//table[@id='maintable']/tbody/tr"));
+
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//table[@id='maintable']/tbody/tr[@name='entry']"));                                 
                 foreach (IWebElement tr in elements)
-                {                  
+                {       
+                           
                     var tds = tr.FindElements(By.TagName("td"));
+                    
+                    var id1 = tr.FindElement(By.TagName("input")).GetAttribute("value");
+
                     if (tds.Count > 0)
                     {
                         var firstName = tds[2].Text;
                         var lastName = tds[1].Text;
 
                         contactCache.Add(new ContactData
-                            {
-                                Firstname = firstName,
-                                Lastname = lastName,
-                                id = tr.FindElement(By.TagName("input")).GetAttribute("Value")
-                            }
-                        );
+                        {
+                            Firstname = firstName,
+                            Lastname = lastName,
+                            id = id1
+                        }
+                        ); ;
                     }
                 }
 

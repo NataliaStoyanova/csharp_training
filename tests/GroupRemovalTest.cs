@@ -19,7 +19,7 @@ namespace WebAddressbookTests
         public void GroupRemovalTest()
         {
             
-             List<GroupData> oldGroups = null;
+             List<GroupData> oldGroups;
 
 
             if (app.GroupHelper.DoesTheGroupExist(0))
@@ -35,15 +35,14 @@ namespace WebAddressbookTests
                 app.GroupHelper.Create(group);               
                 oldGroups = app.GroupHelper.GetGroupList();                               
             }
+
+            GroupData toBeRemoved = oldGroups[0];
+
             app.GroupHelper.RemoveGroup(0);
 
             Assert.AreEqual(oldGroups.Count -1, app.GroupHelper.GetGroupCount());
 
-            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
-
-
-            GroupData toBeRemoved = oldGroups[0];
-
+            List<GroupData> newGroups = app.GroupHelper.GetGroupList();            
             oldGroups.RemoveAt(0);
             oldGroups.Sort();
             newGroups.Sort();
