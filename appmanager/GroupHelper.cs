@@ -42,17 +42,29 @@ namespace WebAddressbookTests
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group"));
                 foreach (IWebElement element in elements)
                 {
-                    /*
-                    GroupData group = new GroupData(element.Text);
-                    group.id = element.FindElement(By.TagName("input")).GetAttribute("value");
-                    //System.Console.Out.Write(element.Text + "\n");
-                    groupCache.Add(group);
-                   */
-
-                    GroupData group = new GroupData(element.Text) {
+                    GroupData group = new GroupData(null) {
                         id = element.FindElement(By.TagName("input")).GetAttribute("value")
                      };                  
                     groupCache.Add(group);
+                }
+
+                //this saves on number of brawser interactions , less brawser interactions 
+                string allGroupNames = driver.FindElement(By.CssSelector("div#content form")).Text;
+                string[] parts = allGroupNames.Split('\n');
+
+                int shift = groupCache.Count - parts.Length;
+
+                for (int i = 0; i < groupCache.Count; i++)
+                {
+                    if (i < shift)
+                    {
+                        groupCache[i].Group_name = "";
+                    }
+                    else 
+                    { 
+                    groupCache[i].Group_name = parts[i-shift].Trim();
+
+                    }
                 }
             }
             return new List<GroupData> (groupCache);

@@ -24,23 +24,23 @@ namespace WebAddressbookTests
             if (isLoggedIn())
             {
                 if (isLoggedIn(account))
-                    {
-                        return;
-                    }
+                {
+                    return;
+                }
                 Logout();
             }
             Type(By.Name("user"), account.Username);
             Type(By.Name("pass"), account.Password);
-            driver.FindElement(By.CssSelector("input[type=\"Submit\"]")).Click(); 
-           
+            driver.FindElement(By.CssSelector("input[type=\"Submit\"]")).Click();
+
         }
         public void Logout()
         {
-            if (isLoggedIn()) 
+            if (isLoggedIn())
             {
                 driver.FindElement(By.LinkText("Logout")).Click();
                 driver.FindElement(By.Name("user"));
-            }       
+            }
         }
 
         public bool isLoggedIn()
@@ -49,7 +49,18 @@ namespace WebAddressbookTests
         }
         public bool isLoggedIn(AccountData account)
         {
-            return isLoggedIn() && driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text == "(" + account.Username + ")";
+            return isLoggedIn() && GetLoggedUserName() == account.Username;
         }
+
+        //string.Format("(${0})", account.Username ~~ ${0}=account.Username
+        public string GetLoggedUserName()
+        {
+            string text = driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text;
+
+            //Substring takes 1st index and number of symbols after the 1st index 
+            return text.Substring(1, text.Length - 2);
+        }
+
     }
+
 }
