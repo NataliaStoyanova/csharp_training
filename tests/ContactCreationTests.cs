@@ -24,7 +24,7 @@ namespace WebAddressbookTests
             contact.Middlename= "Yurieva";
             //contact.Lastname = "Stoyanova";
             contact.Nickname = "Nt_St";
-            contact.Photo= @"C:\Users\User\Pictures\images.jpg";
+            //contact.Photo= @"C:\Users\User\Pictures\images.jpg";
             contact.Title = "Mrs";
             contact.Company = "Soft2Run";
             contact.Address = "Sofia";
@@ -56,7 +56,12 @@ namespace WebAddressbookTests
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();
-            Assert.AreEqual(oldContacts, newContacts);            
+            Assert.AreEqual(oldContacts, newContacts);
+
+            int i = DateTime.Now.Year- int.Parse(contact.Byear);
+            System.Console.Out.Write(i);
+            
+
         }
 
     }

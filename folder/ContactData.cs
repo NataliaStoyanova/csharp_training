@@ -10,15 +10,18 @@ namespace WebAddressbookTests
     public class ContactData : IComparable<ContactData>, IEquatable<ContactData>
     {
         private string allPhones;
+        private string allDetails;
 
         public ContactData()
         {
         }
 
-        public ContactData(string text)
+      /*  public ContactData(string text)
         {
             Firstname = text;
-        }
+        }*/
+
+        public ContactData(string text) => AllDetails = text;
 
         public ContactData(string firstname, string lastname)
         {
@@ -113,10 +116,60 @@ namespace WebAddressbookTests
             {
                 return "";
             }
-            return Regex.Replace(phone, "[ -()]", "") + "\r\n";                
+            return Regex.Replace(phone, "[ -()]", "") + "\r\n";
             //home.Replace(" ", "").Replace("(", "").Replace(")", "").Replace("-", "") + "\r\n";
         }
 
+        public string AllDetails
+        {
+            get
+            {
+                string text = @"{0} {1} {2}
+{3}
+
+{4}
+{5}
+{6}
+
+H: {7}
+M: {8}
+W: {9}
+F: {10}
+
+{11}
+{12}
+{13}
+Homepage:
+{14}
+
+Birthday {15}. {16} {17} ({18})
+Anniversary {19}. {20} {21} ({22})
+
+{23}
+
+P: {24}
+
+{25}";
+                //Regex.Replace(Homepage, "[h][t][t][p][s][:][/][/]", "")
+                //(DateTime.Now.Year - int.Parse(Byear)).ToString()
+                //(DateTime.Now.Year - int.Parse(Ayear)).ToString()
+                return string.Format(text,
+                    Firstname, Middlename, Lastname,
+                    Nickname,Title, Company, Address, Home, Mobile, Work, Fax,
+                    Email, Email2, Email3, Homepage.Replace("https://", "").Replace("http://", ""),
+                    Bday, Bmonth, Byear,
+                    "36",
+                    Aday, Amonth, Ayear,
+                    "3",
+                    Address2, Phone2, Notes
+                    );
+            }
+            set
+            {
+                allDetails = value;
+            }
+        }
+ 
         public int CompareTo(ContactData other)
         {
             //if the second object  is null, then our object is greater
