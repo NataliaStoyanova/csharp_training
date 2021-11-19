@@ -150,17 +150,14 @@ Anniversary {19}. {20} {21} ({22})
 P: {24}
 
 {25}";
-                //Regex.Replace(Homepage, "[h][t][t][p][s][:][/][/]", "")
-                //(DateTime.Now.Year - int.Parse(Byear)).ToString()
-                //(DateTime.Now.Year - int.Parse(Ayear)).ToString()
                 return string.Format(text,
                     Firstname, Middlename, Lastname,
                     Nickname,Title, Company, Address, Home, Mobile, Work, Fax,
                     Email, Email2, Email3, Homepage.Replace("https://", "").Replace("http://", ""),
                     Bday, Bmonth, Byear,
-                    "36",
+                    (DateTime.Now.Year - int.Parse(Byear)).ToString(),
                     Aday, Amonth, Ayear,
-                    "3",
+                    (DateTime.Now.Year - int.Parse(Ayear)).ToString(),
                     Address2, Phone2, Notes
                     );
             }
