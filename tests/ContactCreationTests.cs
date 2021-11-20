@@ -58,10 +58,6 @@ namespace WebAddressbookTests
             newContacts.Sort();
             Assert.AreEqual(oldContacts, newContacts);
 
-            int i = DateTime.Now.Year- int.Parse(contact.Byear);
-            System.Console.Out.Write(i);
-            
-
         }
 
     }

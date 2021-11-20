@@ -12,58 +12,37 @@ namespace WebAddressbookTests
     [TestFixture]
     public class GroupCreationTests : AuthTestBase
     {
-     
-        [Test]
-        public void GroupCreationTest()
-        {
-   
-            GroupData group = new GroupData("group3");
-            group.Group_header = "header3";
-            group.Group_footer = "footer3";
+        //this method must be static for the random test data to be generated on the compilation stage
+        public static IEnumerable<GroupData> RandomGroupDataProvider()
+        { 
+            List<GroupData> groups = new List<GroupData>();
+            for (int i = 0; i < 5; i++)
+            {
+                groups.Add(new GroupData(GenerateRandomString(15))
+                {
+                    Group_header = GenerateRandomString(10),
+                    Group_footer = GenerateRandomString(10)
+                });           
+            }
 
+            return groups;        
+        }
+
+        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public void GroupCreationTest(GroupData group)
+        {   
             List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
         
             app.GroupHelper.Create(group);
-
-            
+           
             Assert.AreEqual(oldGroups.Count + 1, app.GroupHelper.GetGroupCount());
 
-
             List<GroupData> newGroups = app.GroupHelper.GetGroupList();
-
             oldGroups.Add(group);
-
-
             oldGroups.Sort();
             newGroups.Sort();
-
             Assert.AreEqual(oldGroups, newGroups);
         }
-
-        [Test]
-        public void EmptyGroupCreationTest()
-        {
-            
-            GroupData emptygroup = new GroupData("");
-            emptygroup.Group_header = "";
-            emptygroup.Group_footer = "";
-
-            List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
-
-            app.GroupHelper.Create(emptygroup);
-
-            Assert.AreEqual(oldGroups.Count + 1, app.GroupHelper.GetGroupCount());
-
-            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
-
-            oldGroups.Add(emptygroup);
-
-            oldGroups.Sort();
-            newGroups.Sort();
-
-            Assert.AreEqual(oldGroups, newGroups);
-        }
-
        /*
         [Test]
         public void InvalidNameGroupCreationTest()

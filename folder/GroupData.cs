@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 namespace WebAddressbookTests
 {
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
-    {
-        
+    {       
         public GroupData(string group_name)
         {
             Group_name = group_name;
@@ -65,7 +64,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "name= " + Group_name;
+            return "name= " + Group_name + "\nheader = " + Group_header + "\nfooter= " + Group_footer;
         }
     }
 }
