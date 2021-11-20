@@ -10,6 +10,7 @@ namespace WebAddressbookTests
     public class ContactData : IComparable<ContactData>, IEquatable<ContactData>
     {
         private string allPhones;
+        private string allEmails;
         private string allDetails;
 
         public ContactData()
@@ -91,6 +92,35 @@ namespace WebAddressbookTests
         public string Phone2 { get; set; }
         public string Address2 { get; set; }
         public string id { get; set; }
+        public string AllEmails {
+
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {                   
+                    return (PrepareEmail(Email) + PrepareEmail(Email2) + PrepareEmail(Email3)).Trim();
+                }
+            }
+            set
+            {
+                allEmails = value;
+            }
+        }
+
+        private string PrepareEmail(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            return email + "\r\n";
+            //home.Replace(" ", "").Replace("(", "").Replace(")", "").Replace("-", "") + "\r\n";
+        }
+
         public string AllPhones 
         {
             get 
@@ -100,7 +130,7 @@ namespace WebAddressbookTests
                     return allPhones;
                 }
                 else
-                {                   
+                {
                     return (CleanUp(Home) + CleanUp(Mobile) + CleanUp(Work) + CleanUp(Phone2)).Trim();
                 }          
             }
@@ -166,7 +196,6 @@ P: {24}
                 allDetails = value;
             }
         }
- 
         public int CompareTo(ContactData other)
         {
             //if the second object  is null, then our object is greater
