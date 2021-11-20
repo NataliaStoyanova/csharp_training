@@ -208,7 +208,10 @@ P: {24}
 
         public override string ToString()
         {
-            return "Firstname= " + Firstname;
+            return "Firstname= " + Firstname +"\nLastname " +Lastname+ "\nMiddleName " + Middlename
+                + "\nNickname " + Nickname + "\nTitle " + Title+ "" + "\nCompany " + Company +
+                "\nAddress " + Address + "\nHome " + Home + "\nEmail " + Email+ "\nHomepage " + Homepage+
+                "\nBday " + Bday + "\nBmonth "+ Bmonth + "\nByear " + Byear + "\nFax " + Fax;            
         }
     }
 }

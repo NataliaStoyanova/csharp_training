@@ -40,5 +40,43 @@ namespace WebAddressbookTests
             }
             return builder.ToString();           
         }
+
+        public static string GenerateRandomPhoneNumber()
+        {
+            StringBuilder phoneNumber = new StringBuilder();
+            for (int i = 0; i < 12; i++) 
+                {
+                int l = rnd.Next(9);
+                phoneNumber.Append(l.ToString());
+                }
+            return phoneNumber.ToString();      
+        }
+        public static string GenerateRandomMonth()
+        {
+            string[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+            int i = rnd.Next(12);
+            return months[i];
+        }
+        public static string GenerateRandomYear()
+        {
+            int i =  rnd.Next(1900, (DateTime.Now.Year));
+            return i.ToString();
+        }
+        public static string GenerateRandomEmail()
+        {
+            string text = "{0}@{1}.{2}";                
+            return string.Format(text, GenerateRandomString(20), GenerateRandomString(20), GenerateRandomString(5));
+        }
+        public static string GenerateRandomWebAddress()
+        {
+            string text = "https://{0}.{1}";
+            return string.Format(text, GenerateRandomString(20), GenerateRandomString(5));
+        }
+
+        public static string GenerateRandomNumber(int max)
+        {
+            int i = rnd.Next(1, max);
+            return i.ToString();
+        }
     }
 }
