@@ -19,7 +19,7 @@ namespace WebAddressbookTests
             var fromForm = app.ContactHelper.GetContactInfoFromForm(0);
             
             //verification                
-            Assert.AreEqual(fromDetails, fromForm.AllDetails);
+            Assert.AreEqual(fromForm.AllDetails, fromDetails);
         }
 
     }

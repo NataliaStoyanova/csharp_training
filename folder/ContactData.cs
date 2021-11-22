@@ -154,48 +154,222 @@ namespace WebAddressbookTests
         {
             get
             {
-                string text = @"{0} {1} {2}
-{3}
-
-{4}
-{5}
-{6}
-
-H: {7}
-M: {8}
-W: {9}
-F: {10}
-
-{11}
-{12}
-{13}
-Homepage:
-{14}
-
-Birthday {15}. {16} {17} ({18})
-Anniversary {19}. {20} {21} ({22})
-
-{23}
-
-P: {24}
-
-{25}";
-                return string.Format(text,
-                    Firstname, Middlename, Lastname,
-                    Nickname,Title, Company, Address, Home, Mobile, Work, Fax,
-                    Email, Email2, Email3, Homepage.Replace("https://", "").Replace("http://", ""),
-                    Bday, Bmonth, Byear,
-                    (DateTime.Now.Year - int.Parse(Byear)).ToString(),
-                    Aday, Amonth, Ayear,
-                    (DateTime.Now.Year - int.Parse(Ayear)).ToString(),
-                    Address2, Phone2, Notes
-                    );
+                if (allDetails != null)
+                {
+                    return allDetails;
+                }
+                else
+                {
+                    return                     
+                        (prepareParagraph1(Firstname,Middlename,Lastname,Nickname, Title, Company,Address) +
+                        prepareParagraph2(Home, Mobile, Work, Fax) +
+                        prepareParagraph3(Email, Email2, Email3,Homepage) +
+                        prepareParagraph4p1(Bday,Bmonth,Byear)+
+                        prepareParagraph4p2(Aday, Amonth, Ayear) +
+                        prepareParagraph5(Address2)+
+                        prepareParagraph6(Phone2)+
+                        prepareParagraph7(Notes)
+                        ).Trim();
+                }
             }
             set
             {
                 allDetails = value;
             }
         }
+
+        public string prepareParagraph1(string firstname, string middlename, string lastname, string nickname, string title, string company, string address)
+        {
+
+            string Tfirstname, Tmiddlename, Tlastname;
+
+
+            if (!string.IsNullOrEmpty(firstname))
+            {
+                Tfirstname = firstname + " ";
+            }
+            else Tfirstname = "";
+
+            if (!string.IsNullOrEmpty(middlename))
+            {
+                Tmiddlename = middlename + " ";
+            }
+            else Tmiddlename = "";
+
+            if (!string.IsNullOrEmpty(lastname))
+            {
+                Tlastname = lastname;
+            }
+            else Tlastname = "";
+
+            return Tfirstname + Tmiddlename + Tlastname + NewLineValue(nickname) + NewLineValue(title) + NewLineValue(company) + NewLineValue(address);
+        }
+
+        private string prepareParagraph2(string home, string mobile, string work, string fax)
+        {
+            string Hhome, Hmobile, Hwork, Hfax;
+
+            if (!string.IsNullOrEmpty(home)) 
+                {
+                    Hhome = "H: " + home;
+                }
+            else Hhome = "";
+
+
+            if (!string.IsNullOrEmpty(mobile))
+                {
+                     Hmobile = "M: " + mobile;
+                }
+            else Hmobile = "";
+
+            if
+                (!string.IsNullOrEmpty(work) )
+                {
+                     Hwork = "W: " + work;
+                }
+            else Hwork = "";
+
+            if (!string.IsNullOrEmpty(fax))
+                {
+                    Hfax = "F: " + fax;
+                }
+            else Hfax = "";
+
+            return NewParagraph(NextWithNewLine(Hhome) + NextWithNewLine(Hmobile) + NextWithNewLine(Hwork) + NextWithNewLine(Hfax));
+        }
+
+        private string prepareParagraph3(string email1, string email2, string email3, string homepage)
+        {
+           
+            string Thomepage;
+
+            if  (!string.IsNullOrEmpty(homepage))
+            {
+                Thomepage = "Homepage:" + "\r\n"+ homepage.Replace("http://", "").Replace("https://", "");
+            }
+            else Thomepage = "";
+
+            return NewLineValue(NextWithNewLine((email1 ?? "")) + NextWithNewLine((email2 ?? "")) + NextWithNewLine((email3 ?? "")) + Thomepage);
+        }
+
+        private string prepareParagraph4p1(string bday, string bmonth, string byear)
+        {
+            string Tbyear;
+
+            if (!string.IsNullOrEmpty(byear))
+            {
+                Tbyear = byear + " (" + (DateTime.Now.Year - int.Parse(byear)).ToString() + ")";
+            }
+            else Tbyear = "";
+
+            string Tbday;
+
+            if (!string.IsNullOrEmpty(bday) && (Convert.ToInt32(bday)!=0))
+            {
+                Tbday = bday + ". ";
+            }
+            else Tbday = "";
+
+            string Tbmonth;
+
+            if (!string.IsNullOrEmpty(bmonth) && bmonth != "-")
+            {
+                Tbmonth = bmonth + " ";
+            }
+            else Tbmonth = "";
+
+            if (!string.IsNullOrEmpty(bday) || !string.IsNullOrEmpty(bmonth)|| !string.IsNullOrEmpty(byear))
+            {
+                return NewLineValue("Birthday ") + Tbday + Tbmonth  + Tbyear;
+            }
+            else return "";
+        }
+        private string prepareParagraph4p2(string aday, string amonth, string ayear)
+        {
+            string Tayear;
+
+            if (!string.IsNullOrEmpty(ayear))
+            {
+                Tayear = ayear + " (" + (DateTime.Now.Year - int.Parse(ayear)).ToString() + ")";
+            }                  
+            else Tayear = "";
+
+            string Taday;
+
+            if (!string.IsNullOrEmpty(aday) && (Convert.ToInt32(aday) != 0))
+            {
+                Taday = aday + ". ";
+            }
+            else Taday = "";
+
+            string Tamonth;
+
+            if (!string.IsNullOrEmpty(amonth) && amonth != "-")
+            {
+                Tamonth = amonth + " ";
+            }
+            else Tamonth = "";
+
+            if (!string.IsNullOrEmpty(aday) || !string.IsNullOrEmpty(amonth) || !string.IsNullOrEmpty(ayear))
+            {                
+                return NewLineValue("Anniversary ") + Taday + Tamonth + Tayear;
+            }
+            else return "";
+        }
+
+        private string prepareParagraph5(string address2)
+        {
+            if (!string.IsNullOrEmpty(address2))
+            {
+                return NewParagraph(address2); ;
+            }
+            else return "";           
+        }
+
+        private string prepareParagraph6( string phone2)
+        {
+            if (!string.IsNullOrEmpty(phone2))
+            {
+                return NewParagraph("P: "+phone2); ;
+            }
+            else return "";
+        }
+        private string prepareParagraph7( string notes)
+        {
+            if (!string.IsNullOrEmpty(notes))
+            {
+                return NewParagraph(notes); ;
+            }
+            else return "";
+        }
+
+        private string NewLineValue(string value)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                return "\r\n" + value;
+            }
+            else return "";
+        }
+
+        public string NextWithNewLine(string value)
+        {
+            if (value != null && value !="")
+            {
+                return  value + "\r\n";
+            }
+            else return "";               
+        }
+
+        public string NewParagraph(string value)
+        {
+            if (value != null && value != "")
+            {
+                return "\r\n\r\n"+ value;
+            }
+            else return "\r\n\r\n";
+        }
+
         public int CompareTo(ContactData other)
         {
             //if the second object  is null, then our object is greater
