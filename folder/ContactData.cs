@@ -17,11 +17,6 @@ namespace WebAddressbookTests
         {
         }
 
-      /*  public ContactData(string text)
-        {
-            Firstname = text;
-        }*/
-
         public ContactData(string text) => AllDetails = text;
 
         public ContactData(string firstname, string lastname)
@@ -37,13 +32,13 @@ namespace WebAddressbookTests
             Mobile = mobile;
         }
 
-        public ContactData(string firstname, string middlename, string lastname, string nickname, string photo, string title, string company, string address, string home, string mobile, string work, string fax, string email, string email2, string email3, string homepage, string bday, string bmonth, string byear, string aday, string amonth, string ayear, string address2, string phone2, string notes)
+        public ContactData(string firstname, string middlename, string lastname, string nickname, string title, string company, string address, string home, string mobile, string work, string fax, string email, string email2, string email3, string homepage, string bday, string bmonth, string byear, string aday, string amonth, string ayear, string address2, string phone2, string notes)
         {
             Firstname = firstname;
             Middlename = middlename;
             Lastname = lastname;
             Nickname = nickname;
-            Photo = photo;
+            //Photo = photo;
             Title = title;
             Company = company;
             Address = address;

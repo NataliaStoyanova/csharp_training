@@ -17,8 +17,7 @@ namespace WebAddressbookTests
         public void SetUpApplicationManager()
         {
             //Singletone
-           app = ApplicationManager.GetInstance();
-           
+           app = ApplicationManager.GetInstance();          
         }
 
        
@@ -36,7 +35,7 @@ namespace WebAddressbookTests
             {
                 //ASCI symbols with code < 32 are not printable 
                 //generate a random ASCI symbol code l times 
-                builder.Append(Convert.ToChar(32+Convert.ToInt32(rnd.NextDouble() * 223)));
+                builder.Append(Convert.ToChar(32+Convert.ToInt32(rnd.NextDouble() * 65)));
             }
             return builder.ToString();           
         }

@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.IO;
 
 
 namespace WebAddressbookTests
@@ -45,11 +46,48 @@ namespace WebAddressbookTests
 
                 });
             }
-
             return contacts;
         }
 
-        [Test, TestCaseSource("RandomContactDataProvider")]     
+
+        public static IEnumerable<ContactData> ContactDataFromFile()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+            string[] lines = File.ReadAllLines(@"contacts.csv");
+            foreach (string l in lines)
+                {
+                    string[] parts = l.Split(',');
+                    contacts.Add(new ContactData(
+                        parts[0],
+                        parts[1],
+                        parts[2],
+                        parts[3],
+                        parts[4],
+                        parts[5],
+                        parts[6],
+                        parts[7],
+                        parts[8],
+                        parts[9],
+                        parts[10],
+                        parts[11],
+                        parts[12],
+                        parts[13],
+                        parts[14],
+                        parts[15],
+                        parts[16],
+                        parts[17],
+                        parts[18],
+                        parts[19],
+                        parts[20],
+                        parts[21],
+                        parts[22],
+                        parts[23]
+                        ));
+                }
+            return contacts;
+        }
+
+        [Test, TestCaseSource("ContactDataFromFile")]     
         public void ContactCreationTest(ContactData contact)
         {
             List<ContactData> oldContacts = app.ContactHelper.GetContactList();
