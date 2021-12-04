@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addressbook-web-tests", ".\addressbook-web-tests\addressbook-web-tests.csproj", "{E789BE5A-38BF-4611-B861-6390CA9FB1F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addressbook-web-tests", "addressbook-web-tests.csproj", "{E789BE5A-38BF-4611-B861-6390CA9FB1F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addressbook-testdata-generators2", ".\addressbook-testdata-generators2\addressbook-testdata-generators2.csproj", "{A31F7B79-B8B8-4941-803B-9A590BDD597C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "addressbook-testdata-generators2", "..\addressbook-testdata-generators2\addressbook-testdata-generators2.csproj", "{A31F7B79-B8B8-4941-803B-9A590BDD597C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E789BE5A-38BF-4611-B861-6390CA9FB1F0} = {E789BE5A-38BF-4611-B861-6390CA9FB1F0}
 	EndProjectSection
