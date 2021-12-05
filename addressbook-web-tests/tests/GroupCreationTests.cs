@@ -55,7 +55,7 @@ namespace WebAddressbookTests
         }
 
 
-        [Test, TestCaseSource("GroupDataFromFile")]
+        [Test, TestCaseSource("GroupDataFromXmlFile")]
         public void GroupCreationTest(GroupData group)
         {   
             List<GroupData> oldGroups = app.GroupHelper.GetGroupList();

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 
 namespace WebAddressbookTests
@@ -50,7 +48,7 @@ namespace WebAddressbookTests
         }
 
 
-        public static IEnumerable<ContactData> ContactDataFromFile()
+        public static IEnumerable<ContactData> ContactDataFromCsvFile()
         {
             List<ContactData> contacts = new List<ContactData>();
             string[] lines = File.ReadAllLines(@"contacts.csv");
@@ -60,66 +58,29 @@ namespace WebAddressbookTests
                     contacts.Add(new ContactData(
                         parts[0],
                         parts[1],
-                        parts[2],
-                        parts[3],
-                        parts[4],
-                        parts[5],
-                        parts[6],
-                        parts[7],
-                        parts[8],
-                        parts[9],
-                        parts[10],
-                        parts[11],
-                        parts[12],
-                        parts[13],
-                        parts[14],
-                        parts[15],
-                        parts[16],
-                        parts[17],
-                        parts[18],
-                        parts[19],
-                        parts[20],
-                        parts[21],
-                        parts[22],
-                        parts[23]
+                        parts[2]                      
                         ));
                 }
             return contacts;
         }
 
-        [Test, TestCaseSource("ContactDataFromFile")]     
+        public static IEnumerable<ContactData> ContactDataFromXmlFile()
+        {
+            return (List<ContactData>)new XmlSerializer(typeof(List<ContactData>))
+                .Deserialize(new StreamReader(@"Contacts.xml"));
+        }
+
+        public static IEnumerable<ContactData> ContactDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<ContactData>>
+                (File.ReadAllText(@"Contacts.json"));
+        }
+
+
+        [Test, TestCaseSource("ContactDataFromXmlFile")]     
         public void ContactCreationTest(ContactData contact)
         {
             List<ContactData> oldContacts = app.ContactHelper.GetContactList();
-
-            /*
-            ContactData contact = new ContactData("Batalia", "Stoyanova", "08968756");
-            //contact.Firstname = "Natalia";             
-            contact.Middlename= "Yurieva";
-            //contact.Lastname = "Stoyanova";
-            contact.Nickname = "Nt_St";
-            //contact.Photo= @"C:\Users\User\Pictures\images.jpg";
-            contact.Title = "Mrs";
-            contact.Company = "Soft2Run";
-            contact.Address = "Sofia";
-            contact.Home = "099345435";
-            //contact.Mobile = "08968756";
-            contact.Work = "03345346";
-            contact.Fax = "9887665";
-            contact.Email = "qa.natalia.ruseva@gmail.com";
-            contact.Email2 = "qa2.natalia.ruseva@gmail.com";
-            contact.Email3 = "qa3.natalia.ruseva@gmail.com";
-            contact.Homepage = "https://google.com";
-            contact.Bday = "4";
-            contact.Bmonth = "July";
-            contact.Byear = "1985";
-            contact.Aday = "29";
-            contact.Amonth = "July";
-            contact.Ayear = "2018";
-            contact.Address2 = "Tsarevo";
-            contact.Phone2 = "09898786";
-            contact.Notes = "notes";    
-            */
 
             app.ContactHelper.Create(contact);
 

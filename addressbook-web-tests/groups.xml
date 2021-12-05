@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfGroupData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <GroupData>
+    <Group_name>ZIDU5H</Group_name>
+    <Group_header>fghfghfg</Group_header>
+    <Group_footer>FFR</Group_footer>  
+  </GroupData>
+  <GroupData>
+    <Group_name>P</Group_name>
+    <Group_header>hthrhr</Group_header>
+    <Group_footer>fgfghfgh</Group_footer>
+  </GroupData>
+</ArrayOfGroupData>
