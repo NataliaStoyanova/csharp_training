@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
 using WebAddressbookTests;
+using SpreadsheetLight;
 
 namespace addressbook_test_data_generators
 {
@@ -21,7 +22,7 @@ namespace addressbook_test_data_generators
 
             if (datatype == "group")
             {
-                StreamWriter writerGroups = new StreamWriter(filename);
+                
                 List<GroupData> groups = new List<GroupData>();
                 for (int i = 0; i < count; i++)
                 {
@@ -31,28 +32,47 @@ namespace addressbook_test_data_generators
                         Group_footer = TestBase.GenerateRandomString(10)
                     });
                 }
-                if (format == "csv")
+
+                if (format == excel)
                 {
-                    writeGroupsToCsvFile(groups, writerGroups);
-                }
-                else if (format == "xml")
-                {
-                    writeGroupsToXmlFile(groups, writerGroups);
-                }
-                else if (format == "json")
-                {
-                    writeGroupsToJsonFile(groups, writerGroups);
+                    SLDocument sl = new SLDocument("ModifyExistingSpreadsheetOriginal.xlsx", "Sheet2");
+
+                    sl.SetCellValue("E6", "Let's party!!!!111!!!1");
+
+                    sl.SelectWorksheet("Sheet3");
+                    sl.SetCellValue("E6", "Before anyone calls the popo!");
+
+                    sl.AddWorksheet("DanceFloor");
+                    sl.SetCellValue("B4", "Who let the dogs out?");
+                    sl.SetCellValue("B5", "Woof!");
+
+                    sl.SaveAs("ModifyExistingSpreadsheetModified.xlsx");
+                    writeGroupsToExelFile(groups, filename);
                 }
                 else
                 {
-                    System.Console.Out.Write("Unrecognised format " + format);
+                    StreamWriter writerGroups = new StreamWriter(filename);
+                    if (format == "csv")
+                    {
+                        writeGroupsToCsvFile(groups, writerGroups);
+                    }
+                    else if (format == "xml")
+                    {
+                        writeGroupsToXmlFile(groups, writerGroups);
+                    }
+                    else if (format == "json")
+                    {
+                        writeGroupsToJsonFile(groups, writerGroups);
+                    }
+                    else
+                    {
+                        System.Console.Out.Write("Unrecognised format " + format);
+                    }
+                    writerGroups.Close();
                 }
-                writerGroups.Close();
             }
             else if (datatype == "contact")
-               {
-                   
-                    StreamWriter writerContacts = new StreamWriter(filename);
+               {                                    
                     List<ContactData> contacts = new List<ContactData>();
                     for (int i = 0; i < count; i++)
                     {
@@ -62,26 +82,35 @@ namespace addressbook_test_data_generators
                         ));                       
                     }
 
-                    if (format == "csv")
-                    {
-                        writeContactsToCsvFile(contacts, writerContacts);
-                    }
-                    else if (format == "xml")
-                    {
-                        writeContactsToXmlFile(contacts, writerContacts);
-                    }
-                    else if (format == "json")
-                    {
-                        writeContactsToJsonFile(contacts, writerContacts);
-                    }
-                    else
-                    {
-                        System.Console.Out.Write("Unrecognised format " + format);
-                    }
-                    writerContacts.Close();         
+                if (format == excel)
+                {
+                    writeContactsToExelFile(contacts, filename);
                 }
+                else                 
+                {
+                    StreamWriter writerContacts = new StreamWriter(filename);
+               
+                if (format == "csv")
+                {
+                    writeContactsToCsvFile(contacts, writerContacts);
+                }
+                else if (format == "xml")
+                {
+                    writeContactsToXmlFile(contacts, writerContacts);
+                }
+                else if (format == "json")
+                {
+                    writeContactsToJsonFile(contacts, writerContacts);
+                }
+                else
+                {
+                    System.Console.Out.Write("Unrecognised format " + format);
+                }
+                writerContacts.Close();
+                }
+            }
 
-                static void writeGroupsToCsvFile(List<GroupData> groups, StreamWriter writer)
+            static void writeGroupsToCsvFile(List<GroupData> groups, StreamWriter writer)
                 {
                     foreach (GroupData group in groups)
                     {
@@ -125,6 +154,11 @@ namespace addressbook_test_data_generators
                     writer.Write(JsonConvert.SerializeObject(contacts, Newtonsoft.Json.Formatting.Indented));
                 }          
             }
+
+        static void writeGroupsToExelFile(List<GroupData> groups, string filename)
+        {
+            throw new NotImplementedException();
         }
+    }
     }
 

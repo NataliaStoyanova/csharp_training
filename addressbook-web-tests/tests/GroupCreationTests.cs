@@ -4,7 +4,8 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
-
+using System.Linq;
+using System;
 
 namespace WebAddressbookTests
 {
@@ -70,23 +71,38 @@ namespace WebAddressbookTests
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
         }
-       /*
+        /*
+         [Test]
+         public void InvalidNameGroupCreationTest()
+         {
+
+             GroupData emptygroup = new GroupData("a'a");
+             emptygroup.Group_header = "";
+             emptygroup.Group_footer = "";
+
+             List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
+
+             app.GroupHelper.Create(emptygroup);
+
+             List<GroupData> newGroups = app.GroupHelper.GetGroupList();
+
+             Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
+         }
+        */
+
         [Test]
-        public void InvalidNameGroupCreationTest()
+        public void TestDBConnectivity()
         {
+            DateTime start = DateTime.Now;
+            List<GroupData> groupsFromUI = app.GroupHelper.GetGroupList();
+            DateTime end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
 
-            GroupData emptygroup = new GroupData("a'a");
-            emptygroup.Group_header = "";
-            emptygroup.Group_footer = "";
-
-            List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
-
-            app.GroupHelper.Create(emptygroup);
-
-            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
-
-            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
+            
+            start = DateTime.Now;
+            List<GroupData> groupsfromDB = GroupData.GetGroupsFromDB();                        
+            end = DateTime.Now;
+            System.Console.Out.WriteLine(end.Subtract(start));
         }
-       */
     }
 }

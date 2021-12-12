@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LinqToDB.Mapping;
 
 namespace WebAddressbookTests
 {
+    //describe the mapping between the DB table and the model/class
+    [Table(Name ="group_list")]
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData>
     {
         public GroupData()
@@ -25,11 +28,28 @@ namespace WebAddressbookTests
             Group_footer = group_footer;
         }
 
+        //describe the mapping between the property and the column name
+
+        [Column(Name = "group_name"), NotNull]
         public string Group_name { get; set; }
+
+        [Column(Name = "group_header"), NotNull]
         public string Group_header { get; set; }
+
+        [Column(Name = "group_footer"), NotNull]
         public string Group_footer { get; set; }
 
+        [Column(Name = "group_id"), PrimaryKey, Identity]
         public string id { get; set; }
+
+        public static List<GroupData> GetGroupsFromDB() {
+            //Linq
+            using
+                    //create the connection to the DB
+                    (AddressbookDB db = new AddressbookDB()) {
+                return (from g in db.Groups select g).ToList();
+            }
+        }
 
 
         //returns "1" - if this object is grt with our compare rule then the second object
