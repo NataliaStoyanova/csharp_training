@@ -12,21 +12,15 @@ namespace WebAddressbookTests
     [TestFixture]
     public class ContactModificationTests : AuthTestBase
     {
-
         [Test]
         public void ContactModificationTest()
         {
             List<ContactData> oldContacts;
             ContactData oldContact;
-
-
             if (app.ContactHelper.DoesTheContactExist(0))
-
             {
-                oldContacts = app.ContactHelper.GetContactList();
+                oldContacts = ContactData.GetContactsFromDB();
                 oldContact = oldContacts[0];
-
-
             }
             else
             {
@@ -57,7 +51,7 @@ namespace WebAddressbookTests
                 newcontact.Phone2 = null;
                 newcontact.Notes = null;
                 app.ContactHelper.Create(newcontact);
-                oldContacts = app.ContactHelper.GetContactList();
+                oldContacts = ContactData.GetContactsFromDB();
                 oldContact = oldContacts[0];
             }
             ContactData contactM = new ContactData("MVladislav", "MStoyanov", "08968756");
@@ -86,7 +80,7 @@ namespace WebAddressbookTests
             contactM.Address2 = null;
             contactM.Phone2 = null;
             contactM.Notes = null;
-            app.ContactHelper.Modify(0, contactM);
+            app.ContactHelper.ModifyId(oldContact, contactM);
 
 
             //Fast check using hash
@@ -96,7 +90,7 @@ namespace WebAddressbookTests
             oldContacts[0].Firstname = contactM.Firstname;
             oldContacts[0].Lastname = contactM.Lastname;
             oldContacts[0].Mobile = contactM.Mobile;
-            List<ContactData> newContacts = app.ContactHelper.GetContactList();
+            List<ContactData> newContacts = ContactData.GetContactsFromDB();
             oldContacts.Sort();
             newContacts.Sort();
 
@@ -108,10 +102,8 @@ namespace WebAddressbookTests
                 {
                     Assert.AreEqual(contactM.Firstname, contact.Firstname);
                     Assert.AreEqual(contactM.Lastname, contact.Lastname);
-                }
-            
+                }          
             }
         }
-
     }
 }

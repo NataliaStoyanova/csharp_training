@@ -19,7 +19,7 @@ namespace WebAddressbookTests
             
             if (app.ContactHelper.DoesTheContactExist(0))
             {
-                oldContacs = app.ContactHelper.GetContactList();                
+                oldContacs = ContactData.GetContactsFromDB();
             }
             else
             {
@@ -27,18 +27,19 @@ namespace WebAddressbookTests
                 contact.Lastname = "ContactNew";
                 contact.Mobile = "ContactNew";
                 app.ContactHelper.Create(contact);
-                oldContacs = app.ContactHelper.GetContactList();
-               
+                oldContacs = ContactData.GetContactsFromDB();
             }
-            app.ContactHelper.RemoveContact(0);
+
+            ContactData contactTobeRemoved = oldContacs[0];
+            app.ContactHelper.RemoveContactID(contactTobeRemoved);
 
             //Fast check using hash
             Assert.AreEqual(oldContacs.Count-1, app.ContactHelper.GetContactCount());
 
             //Slow check
-            List<ContactData> newContacs = app.ContactHelper.GetContactList();
+            List<ContactData> newContacs = ContactData.GetContactsFromDB();
 
-            ContactData contactTobeRemoved = oldContacs[0];
+            
 
             oldContacs.RemoveAt(0);
             oldContacs.Sort();

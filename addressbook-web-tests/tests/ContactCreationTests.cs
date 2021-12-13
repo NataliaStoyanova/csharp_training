@@ -80,7 +80,7 @@ namespace WebAddressbookTests
         [Test, TestCaseSource("ContactDataFromXmlFile")]     
         public void ContactCreationTest(ContactData contact)
         {
-            List<ContactData> oldContacts = app.ContactHelper.GetContactList();
+            List<ContactData> oldContacts = ContactData.GetContactsFromDB();
 
             app.ContactHelper.Create(contact);
 
@@ -89,7 +89,7 @@ namespace WebAddressbookTests
 
 
             //Slow check
-            List<ContactData> newContacts = app.ContactHelper.GetContactList();
+            List<ContactData> newContacts = ContactData.GetContactsFromDB();
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();

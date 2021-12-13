@@ -13,18 +13,14 @@ namespace WebAddressbookTests
 {
     [TestFixture]
     public class GroupRemovalTests : AuthTestBase
-    {
-       
+    {      
         [Test]
-        public void GroupRemovalTest()
-        {
-            
+        public void GroupRemovalTestUI()
+        {          
              List<GroupData> oldGroups;
 
-
             if (app.GroupHelper.DoesTheGroupExist(0))
-
-            {
+            {                                           
                 oldGroups = app.GroupHelper.GetGroupList();               
             }
             else
@@ -35,14 +31,48 @@ namespace WebAddressbookTests
                 app.GroupHelper.Create(group);               
                 oldGroups = app.GroupHelper.GetGroupList();                               
             }
+            GroupData toBeRemoved = oldGroups[0];
+            app.GroupHelper.RemoveGroup(0);
+            Assert.AreEqual(oldGroups.Count -1, app.GroupHelper.GetGroupCount());
+           
+            List<GroupData> newGroups = app.GroupHelper.GetGroupList();               
+            oldGroups.RemoveAt(0);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+
+            foreach (GroupData group in newGroups)
+            {
+                Assert.AreNotEqual(group.id, toBeRemoved.id);
+            }
+        }
+
+        [Test]
+        public void GroupRemovalTestDB()
+        {
+            List<GroupData> oldGroups;
+            if (app.GroupHelper.DoesTheGroupExist(0))
+
+            {
+                //Groups from DB
+                oldGroups = GroupData.GetGroupsFromDB();             
+            }
+            else
+            {
+                GroupData group = new GroupData("group1");
+                group.Group_header = "header1";
+                group.Group_footer = "footer1";
+                app.GroupHelper.Create(group);
+                //Groups from DB
+                oldGroups = GroupData.GetGroupsFromDB();                             
+            }
 
             GroupData toBeRemoved = oldGroups[0];
+            app.GroupHelper.RemoveGroupId(toBeRemoved);
 
-            app.GroupHelper.RemoveGroup(0);
-
-            Assert.AreEqual(oldGroups.Count -1, app.GroupHelper.GetGroupCount());
-
-            List<GroupData> newGroups = app.GroupHelper.GetGroupList();            
+            Assert.AreEqual(oldGroups.Count - 1, app.GroupHelper.GetGroupCount());
+            //Groups from DB
+            List<GroupData> newGroups = GroupData.GetGroupsFromDB();
             oldGroups.RemoveAt(0);
             oldGroups.Sort();
             newGroups.Sort();

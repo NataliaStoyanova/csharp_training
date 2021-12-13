@@ -30,30 +30,47 @@ namespace WebAddressbookTests
 
 
 
-        public ContactHelper Modify(int i, ContactData newcontact)
+        public ContactHelper ModifyId(ContactData oldcontact, ContactData newcontact)
         {
             manager.Navigator.GoToContactsPage();
-            InitContactModification(i);            
+            InitContactModificationId(oldcontact.id);            
             FillContactForm(newcontact);
             SubmitContactModification();
+            return this;
+        }
+        public ContactHelper RemoveContactID(ContactData contactTobeRemoved)
+        {
+            manager.Navigator.GoToContactsPage();
+            SelectContactId(contactTobeRemoved.id);
+            DeleteContact();
+            Thread.Sleep(3000);
             return this;
         }
 
         public ContactHelper RemoveContact(int tr)
         {
             manager.Navigator.GoToContactsPage();
-            DeleteContact(tr);
+            SelectContact(tr);
+            DeleteContact();
             Thread.Sleep(3000);
             return this;
         }
 
-        public ContactHelper DeleteContact(int index)
-        {                  
-                SelectContact(index);
+        public ContactHelper DeleteContact()
+        {                                 
                 driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
                 driver.SwitchTo().Alert().Accept();
                 contactCache = null;
                 return this;
+        }
+
+        public ContactHelper DeleteContactId(String id)
+        {
+            SelectContactId(id);
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
+            driver.SwitchTo().Alert().Accept();
+            contactCache = null;
+            return this;
         }
 
         private List<ContactData> contactCache = null;
@@ -99,13 +116,19 @@ namespace WebAddressbookTests
 
         public ContactHelper InitContactModification(int row2)
         {
-            SelectContact(row2);
+            //SelectContact(row2);
             //another way
             //driver.FindElements(By.Name("entry"))[row2]
             //.FindElements(By.TagName("td"))[7]
             //.FindElement(By.TagName("a")).Click();
                 
             driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row2 + 2) + "]/td[8]/a")).Click();        
+            return this;
+        }
+
+        public ContactHelper InitContactModificationId(string id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "']/../.." + "//img[@alt='Edit'])")).Click();
             return this;
         }
 
@@ -164,6 +187,13 @@ namespace WebAddressbookTests
             contactCache = null;
             return this;
         }      
+        public ContactHelper SelectContactId(String id)
+        {
+            manager.Navigator.GoToContactsPage();
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
+            return this;
+        }
+
         public ContactHelper SelectContact(int row)
         {
             manager.Navigator.GoToContactsPage();

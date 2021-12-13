@@ -71,6 +71,23 @@ namespace WebAddressbookTests
             newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
         }
+
+        [Test, TestCaseSource("GroupDataFromXmlFile")]
+        public void GroupCreationTestDB(GroupData group)
+        {
+            List<GroupData> oldGroups = GroupData.GetGroupsFromDB();
+
+            app.GroupHelper.Create(group);
+
+            Assert.AreEqual(oldGroups.Count + 1, app.GroupHelper.GetGroupCount());
+
+            List<GroupData> newGroups = GroupData.GetGroupsFromDB();
+            oldGroups.Add(group);
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
+        }
+
         /*
          [Test]
          public void InvalidNameGroupCreationTest()

@@ -151,6 +151,18 @@ namespace WebAddressbookTests
 
         [Column(Name = "id"),PrimaryKey, Identity]
         public string id { get; set; }
+
+        public static List<ContactData> GetContactsFromDB()
+        {
+            //Linq
+            using
+                    //create the connection to the DB
+                    (AddressbookDB db = new AddressbookDB())
+            {
+                return (from g in db.Contacts select g).ToList();
+            }
+        }
+
         public string AllEmails {
 
             get

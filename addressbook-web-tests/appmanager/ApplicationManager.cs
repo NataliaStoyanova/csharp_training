@@ -58,6 +58,7 @@ namespace WebAddressbookTests
             try
             {
                 driver.Quit();
+                driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(2);
             }
             catch (Exception)
             {
