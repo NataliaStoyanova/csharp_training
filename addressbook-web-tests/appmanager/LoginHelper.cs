@@ -13,8 +13,6 @@ namespace WebAddressbookTests
 {
     public class LoginHelper : HelperBase
     {
-
-
         public LoginHelper(ApplicationManager manager) : base(manager)
         {
         }
@@ -32,7 +30,6 @@ namespace WebAddressbookTests
             Type(By.Name("user"), account.Username);
             Type(By.Name("pass"), account.Password);
             driver.FindElement(By.CssSelector("input[type=\"Submit\"]")).Click();
-
         }
         public void Logout()
         {
@@ -56,11 +53,8 @@ namespace WebAddressbookTests
         public string GetLoggedUserName()
         {
             string text = driver.FindElement(By.Name("logout")).FindElement(By.TagName("b")).Text;
-
             //Substring takes 1st index and number of symbols after the 1st index 
             return text.Substring(1, text.Length - 2);
         }
-
     }
-
 }

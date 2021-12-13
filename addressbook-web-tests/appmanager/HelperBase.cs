@@ -18,7 +18,7 @@ namespace WebAddressbookTests
 
         public HelperBase(ApplicationManager manager)
         {
-            this.driver = manager.Driver;
+            driver = manager.Driver;
             this.manager = manager;
         }
 
@@ -34,8 +34,7 @@ namespace WebAddressbookTests
         public void TypeNoClear(By locator, string text)
         {
             if (text != null)
-            {
-               
+            {              
                 driver.FindElement(locator).SendKeys(text);
             }
         }
@@ -52,6 +51,5 @@ namespace WebAddressbookTests
                 return false;
             }             
         }
-
     }
 }

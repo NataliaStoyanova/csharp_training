@@ -10,7 +10,7 @@ using System;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase
     {
         //this method must be static for the random test data to be generated on the compilation stage
         public static IEnumerable<GroupData> RandomGroupDataProvider()

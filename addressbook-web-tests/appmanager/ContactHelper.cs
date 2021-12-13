@@ -120,8 +120,7 @@ namespace WebAddressbookTests
             //another way
             //driver.FindElements(By.Name("entry"))[row2]
             //.FindElements(By.TagName("td"))[7]
-            //.FindElement(By.TagName("a")).Click();
-                
+            //.FindElement(By.TagName("a")).Click();                
             driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + (row2 + 2) + "]/td[8]/a")).Click();        
             return this;
         }

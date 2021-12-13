@@ -9,9 +9,8 @@ using Newtonsoft.Json;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactCreationTests : AuthTestBase
+    public class ContactCreationTests : ContactTestBase
     {
-
         //this method must be static for the random test data to be generated on the compilation stage
         public static IEnumerable<ContactData> RandomContactDataProvider()
         {
@@ -41,7 +40,6 @@ namespace WebAddressbookTests
                     Address2 = GenerateRandomString(10),
                     Phone2 = GenerateRandomPhoneNumber(),
                     Notes = GenerateRandomString(10)
-
                 });
             }
             return contacts;
@@ -87,7 +85,6 @@ namespace WebAddressbookTests
             //Fast check using hash
             Assert.AreEqual(oldContacts.Count + 1, app.ContactHelper.GetContactCount());
 
-
             //Slow check
             List<ContactData> newContacts = ContactData.GetContactsFromDB();
             oldContacts.Add(contact);
@@ -96,6 +93,5 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldContacts, newContacts);
 
         }
-
     }
 }

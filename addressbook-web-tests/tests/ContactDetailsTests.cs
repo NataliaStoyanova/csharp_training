@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactDetailsTests : AuthTestBase
+    public class ContactDetailsTests : ContactTestBase
     {
         [Test]
         public void ContactDetailsTest()
