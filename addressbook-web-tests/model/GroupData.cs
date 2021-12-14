@@ -91,5 +91,15 @@ namespace WebAddressbookTests
         {
             return "name= " + Group_name + "\nheader = " + Group_header + "\nfooter= " + Group_footer;
         }
+
+        public List<ContactData> GetContactsFromDB()
+        {
+            using (AddressbookDB db = new AddressbookDB())
+            {
+                return (from c in db.Contacts
+                        from gcr in db.GCR.Where(p => p.GroupId == id && p.ContactId == c.id && c.Deprecated == "0000-00-00 00:00:00")
+                        select c).Distinct().ToList();
+            }        
+        }
     }
 }

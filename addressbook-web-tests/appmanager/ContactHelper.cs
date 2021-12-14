@@ -28,7 +28,32 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToContactsPage();
+            ClearGroupFilter();
+            SelectContactId(contact.id);
+            SelectGroupToAdd(group.Group_name);
+            CommitContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            return this;
+        }
 
+        private void CommitContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        private void SelectGroupToAdd(string group_name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(group_name);
+        }
+
+        private void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
 
         public ContactHelper ModifyId(ContactData oldcontact, ContactData newcontact)
         {
