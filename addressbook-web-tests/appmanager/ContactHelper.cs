@@ -28,12 +28,23 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper RemoveContactFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToContactsPage();
+            SelectGroupToRemove(group.Group_name);
+            SelectContactId(contact.id);
+            SubmitRemoveFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                    .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            return this;
+        }
+
         public ContactHelper AddContactToGroup(ContactData contact, GroupData group)
         {
             manager.Navigator.GoToContactsPage();
             ClearGroupFilter();
-            SelectContactId(contact.id);
             SelectGroupToAdd(group.Group_name);
+            SelectContactId(contact.id);        
             CommitContactToGroup();
             new WebDriverWait(driver, TimeSpan.FromSeconds(10))
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
@@ -45,9 +56,19 @@ namespace WebAddressbookTests
             driver.FindElement(By.Name("add")).Click();
         }
 
+        private void SubmitRemoveFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
         private void SelectGroupToAdd(string group_name)
         {
             new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(group_name);
+        }
+
+        private void SelectGroupToRemove(string group_name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(group_name);
         }
 
         private void ClearGroupFilter()
@@ -213,7 +234,6 @@ namespace WebAddressbookTests
         }      
         public ContactHelper SelectContactId(String id)
         {
-            manager.Navigator.GoToContactsPage();
             driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).Click();
             return this;
         }
