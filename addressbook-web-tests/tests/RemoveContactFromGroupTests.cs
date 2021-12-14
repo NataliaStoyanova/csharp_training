@@ -22,7 +22,7 @@ namespace WebAddressbookTests
             //select contacts that belong to that group0
             List<ContactData> oldcontacts = group.GetContactsFromDB();
 
-            //select 1 contact from a set of contacts that are not in the group0
+           
             ContactData contact = oldcontacts.First();
 
             app.ContactHelper.RemoveContactFromGroup(contact, group);
