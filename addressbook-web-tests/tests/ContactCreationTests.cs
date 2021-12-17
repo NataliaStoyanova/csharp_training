@@ -78,7 +78,7 @@ namespace WebAddressbookTests
         [Test, TestCaseSource("ContactDataFromXmlFile")]     
         public void ContactCreationTest(ContactData contact)
         {
-            List<ContactData> oldContacts = ContactData.GetContactsFromDB();
+            List<ContactData> oldContacts = ContactData.GetAllContactsFromDB();
 
             app.ContactHelper.Create(contact);
 
@@ -86,7 +86,7 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldContacts.Count + 1, app.ContactHelper.GetContactCount());
 
             //Slow check
-            List<ContactData> newContacts = ContactData.GetContactsFromDB();
+            List<ContactData> newContacts = ContactData.GetAllContactsFromDB();
             oldContacts.Add(contact);
             oldContacts.Sort();
             newContacts.Sort();

@@ -19,7 +19,7 @@ namespace WebAddressbookTests
             
             if (app.ContactHelper.DoesTheContactExist(0))
             {
-                oldContacs = ContactData.GetContactsFromDB();
+                oldContacs = ContactData.GetAllContactsFromDB();
             }
             else
             {
@@ -27,7 +27,7 @@ namespace WebAddressbookTests
                 contact.Lastname = "ContactNew";
                 contact.Mobile = "ContactNew";
                 app.ContactHelper.Create(contact);
-                oldContacs = ContactData.GetContactsFromDB();
+                oldContacs = ContactData.GetAllContactsFromDB();
             }
 
             ContactData contactTobeRemoved = oldContacs[0];
@@ -37,7 +37,7 @@ namespace WebAddressbookTests
             Assert.AreEqual(oldContacs.Count-1, app.ContactHelper.GetContactCount());
 
             //Slow check
-            List<ContactData> newContacs = ContactData.GetContactsFromDB();
+            List<ContactData> newContacs = ContactData.GetAllContactsFromDB();
 
             
 

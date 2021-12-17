@@ -155,7 +155,7 @@ namespace WebAddressbookTests
         [Column(Name = "deprecated")]
         public string Deprecated { get; set; }
 
-        public static List<ContactData> GetContactsFromDB()
+        public static List<ContactData> GetAllContactsFromDB()
         {
             //Linq
             using

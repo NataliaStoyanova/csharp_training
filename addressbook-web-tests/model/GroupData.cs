@@ -42,7 +42,7 @@ namespace WebAddressbookTests
         [Column(Name = "group_id"), PrimaryKey, Identity]
         public string id { get; set; }
 
-        public static List<GroupData> GetGroupsFromDB() {
+        public static List<GroupData> GetAllGroupsFromDB() {
             //Linq
             using
                     //create the connection to the DB
@@ -92,7 +92,7 @@ namespace WebAddressbookTests
             return "name= " + Group_name + "\nheader = " + Group_header + "\nfooter= " + Group_footer;
         }
 
-        public List<ContactData> GetContactsFromDB()
+        public List<ContactData> GetGroupContactsFromDB()
         {
             using (AddressbookDB db = new AddressbookDB())
             {

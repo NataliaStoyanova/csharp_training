@@ -75,13 +75,13 @@ namespace WebAddressbookTests
         [Test, TestCaseSource("GroupDataFromXmlFile")]
         public void GroupCreationTestDB(GroupData group)
         {
-            List<GroupData> oldGroups = GroupData.GetGroupsFromDB();
+            List<GroupData> oldGroups = GroupData.GetAllGroupsFromDB();
 
             app.GroupHelper.Create(group);
 
             Assert.AreEqual(oldGroups.Count + 1, app.GroupHelper.GetGroupCount());
 
-            List<GroupData> newGroups = GroupData.GetGroupsFromDB();
+            List<GroupData> newGroups = GroupData.GetAllGroupsFromDB();
             oldGroups.Add(group);
             oldGroups.Sort();
             newGroups.Sort();
@@ -117,7 +117,7 @@ namespace WebAddressbookTests
 
             
             start = DateTime.Now;
-            List<GroupData> groupsfromDB = GroupData.GetGroupsFromDB();                        
+            List<GroupData> groupsfromDB = GroupData.GetAllGroupsFromDB();                        
             end = DateTime.Now;
             System.Console.Out.WriteLine(end.Subtract(start));
         }
@@ -125,7 +125,7 @@ namespace WebAddressbookTests
         [Test]
         public void TestContactsInGroups()
         {
-            foreach (ContactData contact in GroupData.GetGroupsFromDB()[0].GetContactsFromDB())
+            foreach (ContactData contact in GroupData.GetAllGroupsFromDB()[0].GetGroupContactsFromDB())
             {
                 Console.Out.WriteLine(contact);
             }

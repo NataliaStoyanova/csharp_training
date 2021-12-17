@@ -55,7 +55,7 @@ namespace WebAddressbookTests
 
             {
                 //Groups from DB
-                oldGroups = GroupData.GetGroupsFromDB();             
+                oldGroups = GroupData.GetAllGroupsFromDB();             
             }
             else
             {
@@ -64,7 +64,7 @@ namespace WebAddressbookTests
                 group.Group_footer = "footer1";
                 app.GroupHelper.Create(group);
                 //Groups from DB
-                oldGroups = GroupData.GetGroupsFromDB();                             
+                oldGroups = GroupData.GetAllGroupsFromDB();                             
             }
 
             GroupData toBeRemoved = oldGroups[0];
@@ -72,7 +72,7 @@ namespace WebAddressbookTests
 
             Assert.AreEqual(oldGroups.Count - 1, app.GroupHelper.GetGroupCount());
             //Groups from DB
-            List<GroupData> newGroups = GroupData.GetGroupsFromDB();
+            List<GroupData> newGroups = GroupData.GetAllGroupsFromDB();
             oldGroups.RemoveAt(0);
             oldGroups.Sort();
             newGroups.Sort();

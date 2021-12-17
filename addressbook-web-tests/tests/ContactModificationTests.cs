@@ -19,7 +19,7 @@ namespace WebAddressbookTests
             ContactData oldContact;
             if (app.ContactHelper.DoesTheContactExist(0))
             {
-                oldContacts = ContactData.GetContactsFromDB();
+                oldContacts = ContactData.GetAllContactsFromDB();
                 oldContact = oldContacts[0];
             }
             else
@@ -51,7 +51,7 @@ namespace WebAddressbookTests
                 newcontact.Phone2 = null;
                 newcontact.Notes = null;
                 app.ContactHelper.Create(newcontact);
-                oldContacts = ContactData.GetContactsFromDB();
+                oldContacts = ContactData.GetAllContactsFromDB();
                 oldContact = oldContacts[0];
             }
             ContactData contactM = new ContactData("MVladislav", "MStoyanov", "08968756");
@@ -90,7 +90,7 @@ namespace WebAddressbookTests
             oldContacts[0].Firstname = contactM.Firstname;
             oldContacts[0].Lastname = contactM.Lastname;
             oldContacts[0].Mobile = contactM.Mobile;
-            List<ContactData> newContacts = ContactData.GetContactsFromDB();
+            List<ContactData> newContacts = ContactData.GetAllContactsFromDB();
             oldContacts.Sort();
             newContacts.Sort();
 

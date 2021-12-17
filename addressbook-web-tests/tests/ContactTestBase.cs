@@ -15,7 +15,7 @@ namespace WebAddressbookTests
             if (PERFORM_LONG_UI_CHECKS)
             {
                 List<ContactData> fromUI = app.ContactHelper.GetContactList();
-                List<ContactData> fromDB = ContactData.GetContactsFromDB();
+                List<ContactData> fromDB = ContactData.GetAllContactsFromDB();
                 fromUI.Sort();
                 fromDB.Sort();
                 Assert.AreEqual(fromUI, fromDB);
